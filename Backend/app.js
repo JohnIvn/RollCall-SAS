@@ -1,44 +1,31 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import express from "express";
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import cors from "cors";
+import createDatabaseIfNotExists from "./Services/databaseCreate.js";
+import db from "./database.js";
 
 dotenv.config();
+const app = express();
 
-const uri = process.env.DATABASE_URI;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-const run = async () => {
+async function initializeApp() {
   try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    await client.close();
+    await createDatabaseIfNotExists();
+    await db.authenticate();
+
+    console.log("Tables have been created or checked.");
+
+    const server = app.listen(process.env.PORT, () => {
+      console.log(`App is listening on port: ${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.error("Error initializing the application:", error);
+    process.exit(1);
   }
-};
-
-try {
-  await client.connect();
-  const database = client.db("myDatabase");
-  const collection = database.collection("myCollection");
-
-  const result = await collection.insertOne({
-    name: "John Doe",
-    age: 30,
-    city: "New York",
-  });
-
-  console.log(`New document inserted with _id: ${result.insertedId}`);
-} finally {
-  await client.close();
 }
 
-run().catch(console.dir);
+initializeApp();
