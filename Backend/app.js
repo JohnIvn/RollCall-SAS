@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
+import { WebSocketServer } from "ws";
 import createDatabaseIfNotExists from "./Services/databaseCreate.js";
 import db from "./database.js";
 import {
@@ -45,11 +46,25 @@ async function initializeApp() {
     await insertSubjectIfNotExist();
     await insertSectionIfNotExist();
     await insertCourseIfNotExist();
-
     await insertTeacherIfNotExist();
 
-    const server = app.listen(process.env.PORT, () => {
-      console.log(`App is listening on port: ${process.env.PORT}`);
+    const server = app.listen(process.env.WS_PORT, () => {
+      console.log(`App is listening on port: ${process.env.WS_PORT}`);
+    });
+
+    const wss = new WebSocketServer({ server });
+
+    wss.on("connection", (ws) => {
+      console.log("New WebSocket connection established.");
+
+      ws.on("message", (message) => {
+        console.log("Received:", message.toString());
+        ws.send(`Server received: ${message}`);
+      });
+
+      ws.on("close", () => {
+        console.log("WebSocket connection closed.");
+      });
     });
   } catch (error) {
     console.error("Error initializing the application:", error);
