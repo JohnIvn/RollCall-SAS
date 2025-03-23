@@ -1,21 +1,19 @@
 import db from "../database.js";
 import { Sequelize, DataTypes, Model } from "sequelize";
 import dotenv from "dotenv";
-import Section from "./sectionModel.js";
-import Course from "./courseModel.js";
 
 dotenv.config();
 
-class studentAccountModel extends Model {}
+class teacherAccountModel extends Model {}
 
-const studentAccount = studentAccountModel.init(
+const teacherAccount = teacherAccountModel.init(
   {
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    studentNumber: {
+    teacherNumber: {
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,
@@ -32,30 +30,9 @@ const studentAccount = studentAccountModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    course: {
-      type: DataTypes.STRING,
-      references: {
-        model: Course,
-        key: "name",
-      },
-    },
-    year: {
-      type: DataTypes.STRING,
-      references: {
-        model: Section,
-        key: "year",
-      },
-    },
-    section: {
-      type: DataTypes.STRING,
-      references: {
-        model: Section,
-        key: "section",
-      },
-    },
     role: {
       type: DataTypes.STRING,
-      defaultValue: process.env.DEFAULT_USER_ROLE,
+      defaultValue: process.env.DEFAULT_STAFF_ROLE,
       allowNull: false,
     },
     email: {
@@ -75,21 +52,21 @@ const studentAccount = studentAccountModel.init(
   },
   {
     sequelize: db,
-    modelName: "StudentAccounts",
-    tableName: "Student_Accounts",
+    modelName: "TeacherAccounts",
+    tableName: "Teacher_Accounts",
     timestamps: true,
   }
 );
 
-class StudentUnhashedAccountModel extends Model {}
+class TeacherUnhashedAccountModel extends Model {}
 
-const studentUnhashedAccount = StudentUnhashedAccountModel.init(
+const teacherUnhashedAccount = TeacherUnhashedAccountModel.init(
   {
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: {
-        model: studentAccount,
+        model: teacherAccount,
         key: "userId",
       },
       allowNull: false,
@@ -108,10 +85,10 @@ const studentUnhashedAccount = StudentUnhashedAccountModel.init(
   },
   {
     sequelize: db,
-    modelName: "StudentUnhashedAccount",
-    tableName: "student_unhashed_accounts",
+    modelName: "TeacherUnhashedAccount",
+    tableName: "teacher_unhashed_accounts",
     timestamps: true,
   }
 );
 
-export { studentAccount, studentUnhashedAccount };
+export { teacherAccount, teacherUnhashedAccount };

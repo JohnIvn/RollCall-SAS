@@ -1,26 +1,48 @@
 import {
-  userStudentAccount,
-  AdminAccount,
+  studentAccount,
+  studentUnhashedAccount,
 } from "../Models/studentAccountModel.js";
+import {
+  teacherAccount,
+  teacherUnhashedAccount,
+} from "../Models/teacherAccountModel.js";
 import Subject from "../Models/subjectsModel.js";
 import Section from "../Models/sectionModel.js";
 import Course from "../Models/courseModel.js";
 
 async function createTableUserAccounts() {
   try {
-    await userStudentAccount.sync({ alter: false });
+    await studentAccount.sync({ alter: false });
     console.log("Students Account table is checked and updated if necessary");
   } catch (error) {
     console.error("Error checking/updating Student User Account table", error);
   }
 }
 
-async function createTableAdminAccounts() {
+async function createTableStudentUnhashedccounts() {
   try {
-    await AdminAccount.sync({ alter: false });
-    console.log("Admin Account table is checked and updated if necessary");
+    await studentUnhashedAccount.sync({ alter: false });
+    console.log("Student Unhashed Account table is checked and updated if necessary");
   } catch (error) {
-    console.error("Error checking/updating Admin User Account table", error);
+    console.error("Error checking/updating Student Unhashed Account table", error);
+  }
+}
+
+async function createTableTeacherAccounts() {
+  try {
+    await teacherAccount.sync({ alter: false });
+    console.log("Teacher Account table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Teacher User Account table", error);
+  }
+}
+
+async function createTabletTeacherUnhashedccounts() {
+  try {
+    await teacherUnhashedAccount.sync({ alter: false });
+    console.log("Teacher Unhashed Account table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Teacher Unhashed Account table", error);
   }
 }
 
@@ -53,7 +75,9 @@ async function createTableCourseTable() {
 
 export {
   createTableUserAccounts,
-  createTableAdminAccounts,
+  createTableStudentUnhashedccounts,
+  createTableTeacherAccounts,
+  createTabletTeacherUnhashedccounts,
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,

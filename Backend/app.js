@@ -6,7 +6,9 @@ import createDatabaseIfNotExists from "./Services/databaseCreate.js";
 import db from "./database.js";
 import {
   createTableUserAccounts,
-  createTableAdminAccounts,
+  createTableStudentUnhashedccounts,
+  createTableTeacherAccounts,
+  createTabletTeacherUnhashedccounts,
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,
@@ -16,6 +18,7 @@ import {
   insertSectionIfNotExist,
   insertCourseIfNotExist,
 } from "./Services/valueInserter.js";
+import { insertTeacherIfNotExist } from "./Services/userInserter.js";
 
 dotenv.config();
 const app = express();
@@ -33,13 +36,17 @@ async function initializeApp() {
     await createTableSubjectTable();
     await createTableCourseTable();
     await createTableUserAccounts();
-    await createTableAdminAccounts();
+    await createTableStudentUnhashedccounts();
+    await createTableTeacherAccounts();
+    await createTabletTeacherUnhashedccounts();
 
     console.log("Tables have been created or checked.");
 
     await insertSubjectIfNotExist();
     await insertSectionIfNotExist();
     await insertCourseIfNotExist();
+
+    await insertTeacherIfNotExist();
 
     const server = app.listen(process.env.PORT, () => {
       console.log(`App is listening on port: ${process.env.PORT}`);
