@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFingerprint, faIdCard, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Card1({CardStatus, OnClose, Label, Type }) {
+	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false)
 	const [formValues, setFormValues] = useState({ email: "", password: "" });
 

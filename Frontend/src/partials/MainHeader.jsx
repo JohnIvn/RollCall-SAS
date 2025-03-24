@@ -4,13 +4,13 @@
 	export default function MainHeader() {
 		const NavUrls = [
 			{
-				label: "Home", link: "/home"
+				label: "Home", link: "/home/dashboard"
 			},
 			{
-				label: "Contacts", link: "/contacts"
+				label: "Contacts", link: "/home/contacts"
 			},
 			{
-				label: "Privacy Policy", link: "/privacy-policy"
+				label: "Privacy Policy", link: "/home/privacy-policy"
 			}
 
 		]
