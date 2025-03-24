@@ -10,7 +10,7 @@ import Subject from "../Models/subjectsModel.js";
 import Section from "../Models/sectionModel.js";
 import Course from "../Models/courseModel.js";
 import Test from "../Models/testModel.js";
-import Banned from "../Models/bannedID.js";
+import Banned from "../Models/bannedModel.js";
 
 async function createTableUserAccounts() {
   try {
@@ -24,9 +24,14 @@ async function createTableUserAccounts() {
 async function createTableStudentUnhashedccounts() {
   try {
     await studentUnhashedAccount.sync({ alter: false });
-    console.log("Student Unhashed Account table is checked and updated if necessary");
+    console.log(
+      "Student Unhashed Account table is checked and updated if necessary"
+    );
   } catch (error) {
-    console.error("Error checking/updating Student Unhashed Account table", error);
+    console.error(
+      "Error checking/updating Student Unhashed Account table",
+      error
+    );
   }
 }
 
@@ -42,9 +47,14 @@ async function createTableTeacherAccounts() {
 async function createTabletTeacherUnhashedccounts() {
   try {
     await teacherUnhashedAccount.sync({ alter: false });
-    console.log("Teacher Unhashed Account table is checked and updated if necessary");
+    console.log(
+      "Teacher Unhashed Account table is checked and updated if necessary"
+    );
   } catch (error) {
-    console.error("Error checking/updating Teacher Unhashed Account table", error);
+    console.error(
+      "Error checking/updating Teacher Unhashed Account table",
+      error
+    );
   }
 }
 

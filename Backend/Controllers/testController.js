@@ -1,13 +1,17 @@
 import Test from "../Models/testModel.js";
+import Banned from "../Models/bannedModel.js";
 
 export const saveTestData = async (data) => {
   try {
-    // Remove the "Card Scanned: " prefix if it exists
     const cleanedData = data.replace(/^Card Scanned:\s*/, "");
 
-    if (cleanedData === "3e8d402") {
-      console.log("Banned card detected: 3e8d402. Data not saved.");
-      return null; // Prevent saving
+    const bannedEntry = await Banned.findOne({
+      where: { Banned_hex: cleanedData },
+    });
+
+    if (bannedEntry) {
+      console.log(`Banned card detected: ${cleanedData}. Data not saved.`);
+      return null;
     }
 
     const newTest = await Test.create({ test_hex: cleanedData });

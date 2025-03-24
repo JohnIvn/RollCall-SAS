@@ -1,6 +1,7 @@
 import SubjectModel from "../Models/subjectsModel.js";
 import SectionModel from "../Models/sectionModel.js";
 import CourseModel from "../Models/courseModel.js";
+import Banned from "../Models/bannedModel.js";
 
 export const insertSubjectIfNotExist = async () => {
   try {
@@ -129,5 +130,27 @@ export const insertCourseIfNotExist = async () => {
     }
   } catch (error) {
     console.error("Error inserting Course:", error);
+  }
+};
+
+export const insertBannedIfNotExist = async () => {
+  try {
+    const existingSection = await Banned.findAll();
+
+    if (existingSection.length === 0) {
+      const Course = [
+        {
+          Banned_id: 1,
+          Banned_hex: "3e8d402",
+        },
+      ];
+
+      await Banned.bulkCreate(Course);
+      console.log("Banned List inserted successfully");
+    } else {
+      console.log("Banned List  already exist, skipping insertion.");
+    }
+  } catch (error) {
+    console.error("Error inserting Banned List :", error);
   }
 };

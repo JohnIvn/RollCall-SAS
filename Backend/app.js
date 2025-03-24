@@ -20,6 +20,7 @@ import {
   insertSubjectIfNotExist,
   insertSectionIfNotExist,
   insertCourseIfNotExist,
+  insertBannedIfNotExist,
 } from "./Services/valueInserter.js";
 import { insertTeacherIfNotExist } from "./Services/userInserter.js";
 import { saveTestData } from "./Controllers/testController.js";
@@ -44,6 +45,7 @@ async function initializeApp() {
     await createTableTeacherAccounts();
     await createTabletTeacherUnhashedccounts();
     await createTableTestTable();
+    await createTableBannedTable();
 
     console.log("Tables have been created or checked.");
 
@@ -51,6 +53,7 @@ async function initializeApp() {
     await insertSectionIfNotExist();
     await insertCourseIfNotExist();
     await insertTeacherIfNotExist();
+    await insertBannedIfNotExist();
 
     const server = app.listen(process.env.WS_PORT, () => {
       console.log(`App is listening on port: ${process.env.WS_PORT}`);
