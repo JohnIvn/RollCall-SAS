@@ -9,6 +9,10 @@ import {
 import Subject from "../Models/subjectsModel.js";
 import Section from "../Models/sectionModel.js";
 import Course from "../Models/courseModel.js";
+import Test from "../Models/testModel.js";
+import Banned from "../Models/bannedModel.js";
+import Room1 from "../Models/room1Model.js";
+import Room2 from "../Models/room2Model.js";
 
 async function createTableUserAccounts() {
   try {
@@ -22,9 +26,14 @@ async function createTableUserAccounts() {
 async function createTableStudentUnhashedccounts() {
   try {
     await studentUnhashedAccount.sync({ alter: false });
-    console.log("Student Unhashed Account table is checked and updated if necessary");
+    console.log(
+      "Student Unhashed Account table is checked and updated if necessary"
+    );
   } catch (error) {
-    console.error("Error checking/updating Student Unhashed Account table", error);
+    console.error(
+      "Error checking/updating Student Unhashed Account table",
+      error
+    );
   }
 }
 
@@ -40,9 +49,14 @@ async function createTableTeacherAccounts() {
 async function createTabletTeacherUnhashedccounts() {
   try {
     await teacherUnhashedAccount.sync({ alter: false });
-    console.log("Teacher Unhashed Account table is checked and updated if necessary");
+    console.log(
+      "Teacher Unhashed Account table is checked and updated if necessary"
+    );
   } catch (error) {
-    console.error("Error checking/updating Teacher Unhashed Account table", error);
+    console.error(
+      "Error checking/updating Teacher Unhashed Account table",
+      error
+    );
   }
 }
 
@@ -73,6 +87,42 @@ async function createTableCourseTable() {
   }
 }
 
+async function createTableTestTable() {
+  try {
+    await Test.sync({ alter: false });
+    console.log("Test table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Test table", error);
+  }
+}
+
+async function createTableBannedTable() {
+  try {
+    await Banned.sync({ alter: false });
+    console.log("Banned table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Banned table", error);
+  }
+}
+
+async function createTableRoom1Table() {
+  try {
+    await Room1.sync({ alter: false });
+    console.log("Room1 table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Room1 table", error);
+  }
+}
+
+async function createTableRoom2Table() {
+  try {
+    await Room2.sync({ alter: false });
+    console.log("Room2 table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Room2 table", error);
+  }
+}
+
 export {
   createTableUserAccounts,
   createTableStudentUnhashedccounts,
@@ -81,4 +131,8 @@ export {
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,
+  createTableTestTable,
+  createTableBannedTable,
+  createTableRoom1Table,
+  createTableRoom2Table,
 };

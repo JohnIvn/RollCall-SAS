@@ -1,5 +1,5 @@
 import db from "../database.js";
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import dotenv from "dotenv";
 import Section from "./sectionModel.js";
 import Course from "./courseModel.js";
@@ -16,6 +16,11 @@ const studentAccount = studentAccountModel.init(
       autoIncrement: true,
     },
     studentNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
+    },
+    cardNumber: {
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,

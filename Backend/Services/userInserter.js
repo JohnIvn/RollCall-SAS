@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { teacherAccount, teacherUnhashedAccount } from '../Models/teacherAccountModel.js';
+import { studentAccount, studentUnhashedAccount } from '../Models/studentAccountModel.js';
 
 const saltRounds = 10;
 
@@ -36,5 +37,46 @@ export const insertTeacherIfNotExist = async () => {
     }
   } catch (error) {
     console.error("Error inserting Teacher:", error);
+  }
+};
+
+export const insertStudentIfNotExist = async () => {
+  try {
+    const existingTeacher = await studentAccount.findAll();
+
+    if (existingTeacher.length === 0) {
+      const password = "Crocodillo";
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      const studentData = {
+        userId: 1,
+        studentNumber: "20236969-N",
+        cardNumber: "b5b9b5",
+        first_name: "Matthew",
+        middle_name: "Gabo",
+        last_name: "Crocodillo",
+        course: "BSIT",
+        year:  "2",
+        section: "C",
+        role: "Student",
+        email: "matthewgabocrocodillo@gmail.com",
+        phoneNumber: "099999999",
+        password: hashedPassword,
+      };
+
+      await studentAccount.create(studentData);
+
+      await studentUnhashedAccount.create({
+        userId: studentData.userId, 
+        email: studentData.email,
+        password: password, 
+      });
+
+      console.log("Students inserted successfully in both tables.");
+    } else {
+      console.log("Students already exists, skipping insertion.");
+    }
+  } catch (error) {
+    console.error("Error inserting Students:", error);
   }
 };

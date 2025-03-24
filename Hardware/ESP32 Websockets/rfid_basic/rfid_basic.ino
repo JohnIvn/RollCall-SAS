@@ -11,9 +11,9 @@
 // PIN 23 MOSI
 // 3.3v and GND
 
-const char* ssid = "gabmarcus2406-2.4ghz";
-const char* password = "marcus2406*";
-const char* websocket_server = "ws://192.168.100.50:3001";
+const char* ssid = "ZTE_2.4G_emHexQ";
+const char* password = "ex3pFTqm";
+const char* websocket_server = "ws://192.168.1.7:3001";
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 using namespace websockets;
@@ -57,7 +57,7 @@ void setup() {
 void loop() {
     if (!client.available()) {  // Check if WebSocket is disconnected
         Serial.println("WebSocket Disconnected! Reconnecting...");
-        client.connect(websocket_server);
+        client.connect( websocket_server);
         if (client.available()) {
             Serial.println("Reconnected!");
             client.send("ESP32 Reconnected!");
