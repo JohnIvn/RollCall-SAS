@@ -181,7 +181,63 @@ export default function AdminPage(){
 						</div>
 					</div>
 
-					
+					<div
+						className='flex flex-col justify-start items-center w-full h-full overflow-hidden rounded-2xl'
+					>
+						<div
+							className='flex justify-center items-center h-16 w-full bg-zinc-800'
+						>
+							<h1
+								className='w-6 text-center text-white'
+							>
+								#
+							</h1>
+							<h1
+								className='w-1/2 text-center text-white'
+							>
+								Student Name
+							</h1>
+							<h1
+								className='w-1/4 text-center text-white'
+							>
+								Student No
+							</h1>
+							<h1
+								className='w-1/6 text-center text-white'
+							>
+								Attendance
+							</h1>
+						</div>
+						<div
+							className='flex w-full h-full bg-white'
+						>
+
+<div
+							className='flex justify-center items-center h-10 w-full'
+						>
+							<h1
+								className='w-6 text-center text-black'
+							>
+								1
+							</h1>
+							<h1
+								className='w-1/2 text-center text-black'
+							>
+								Bombardiro Crocodilo
+							</h1>
+							<h1
+								className='w-1/4  text-center text-black'
+							>
+								2021412-N
+							</h1>
+							<h1
+								className='w-1/6 text-center text-black'
+							>
+								<FontAwesomeIcon icon={faCheckCircle}/>
+							</h1>
+						</div>
+						</div>
+					</div>
 
 				</div>
 
