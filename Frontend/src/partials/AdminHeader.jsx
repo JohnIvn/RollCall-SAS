@@ -4,9 +4,6 @@ import uccImg from '/ucc.png';
 export default function AdminHeader() {
 	const NavUrls = [
 		{
-			label: "Schedule", link: "/admin/schedule"
-		},
-		{
 			label: "Courses", link: "/admin/courses"
 		},
 		{

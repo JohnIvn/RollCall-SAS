@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import TestPage from './TestPage'
 import AdminPage from './Admin'
 import AdminHeader from '../partials/AdminHeader'
+import StudentsPage from './Students'
 
 export default function AdminRouter() {
 
@@ -15,6 +16,7 @@ export default function AdminRouter() {
 			>
 				<Routes>
 					<Route path="dashboard" element={<AdminPage />} />
+					<Route path="students" element={<StudentsPage />} />
 				</Routes>
 			</div>
 		</section>
