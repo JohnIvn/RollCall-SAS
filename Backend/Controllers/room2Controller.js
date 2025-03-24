@@ -3,11 +3,11 @@ import dayjs from "dayjs";
 import Test from "../Models/testModel.js";
 import Banned from "../Models/bannedModel.js";
 import { studentAccount } from "../Models/studentAccountModel.js";
-import Room1 from "../Models/room1Model.js";
+import Room2 from "../Models/room2Model.js";
 
 let lastScannedCard = null;
 
-export const saveTestData = async (data) => {
+export const room2Switch = async (data) => {
   try {
     const cleanedData = data.replace(/^Card Scanned:\s*/, "");
 
@@ -40,7 +40,7 @@ export const saveTestData = async (data) => {
 
     const currentTime = dayjs().format("HH:mm");
 
-    const roomEntry = await Room1.findOne({
+    const roomEntry = await Room2.findOne({
       where: {
         Time_In: { [Op.lte]: currentTime },
         Time_Out: { [Op.gte]: currentTime },
