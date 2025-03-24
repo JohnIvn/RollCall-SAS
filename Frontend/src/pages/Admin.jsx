@@ -3,7 +3,7 @@ import { faCaretDown, faCheckCircle, faSearch } from '@fortawesome/free-solid-sv
 import UccLogo from '/ucc.png'
 
 
-export default function AdminPage(){
+export default function AdminPage() {
 
 	return (
 		<section
@@ -33,7 +33,7 @@ export default function AdminPage(){
 								className='w-full text-start text-md font-semibold'
 							>
 								Matthew Gabriel M. Cania
-								</h1>
+							</h1>
 							<p
 								className='text-sm w-full text-start'
 							>
@@ -46,11 +46,11 @@ export default function AdminPage(){
 					<div
 						className='flex flex-col h-full w-full justify-start items-center'
 					>
-					<h1
-						className='flex w-8/9 justify-start items-center font-semibold'
-					>
-						Registered Subject:
-					</h1>
+						<h1
+							className='flex w-8/9 justify-start items-center font-semibold'
+						>
+							Registered Subject:
+						</h1>
 						<div
 							className='flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2'
 						>
@@ -61,7 +61,7 @@ export default function AdminPage(){
 							</h1>
 							<FontAwesomeIcon
 								className='flex w-10 text-white'
-							icon={faCaretDown}/>
+								icon={faCaretDown} />
 						</div>
 
 						<h1
@@ -83,7 +83,7 @@ export default function AdminPage(){
 								Mon -  10:00AM to 12:00PM
 							</h1>
 						</div>
-						
+
 						<div
 							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
 						>
@@ -98,7 +98,7 @@ export default function AdminPage(){
 							</h1>
 						</div>
 
-						
+
 						<div
 							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
 						>
@@ -112,7 +112,7 @@ export default function AdminPage(){
 								Mon -  10:00AM to 12:00PM
 							</h1>
 						</div>
-						
+
 						<div
 							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
 						>
@@ -126,7 +126,7 @@ export default function AdminPage(){
 								Mon -  10:00AM to 12:00PM
 							</h1>
 						</div>
-						
+
 						<div
 							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
 						>
@@ -140,7 +140,7 @@ export default function AdminPage(){
 								Mon -  10:00AM to 12:00PM
 							</h1>
 						</div>
-						
+
 					</div>
 
 				</div>
@@ -170,14 +170,14 @@ export default function AdminPage(){
 						<div
 							className='flex justify-center items-center w-2/5 h-full relative'
 						>
-							<input 
+							<input
 								className='flex h-10 w-full rounded-xl border border-gray-600 text-white placeholder-gray-400 pl-8'
 								placeholder='Search...'
-								type="text" 
+								type="text"
 							/>
 							<FontAwesomeIcon
 								className='flex justify-center items-center text-gray-400 absolute left-0 px-2'
-								icon={faSearch}/>
+								icon={faSearch} />
 						</div>
 					</div>
 
@@ -212,30 +212,30 @@ export default function AdminPage(){
 							className='flex w-full h-full bg-white'
 						>
 
-<div
-							className='flex justify-center items-center h-10 w-full'
-						>
-							<h1
-								className='w-6 text-center text-black'
+							<div
+								className='flex justify-center items-center h-10 w-full'
 							>
-								1
-							</h1>
-							<h1
-								className='w-1/2 text-center text-black'
-							>
-								Bombardiro Crocodilo
-							</h1>
-							<h1
-								className='w-1/4  text-center text-black'
-							>
-								2021412-N
-							</h1>
-							<h1
-								className='w-1/6 text-center text-black'
-							>
-								<FontAwesomeIcon icon={faCheckCircle}/>
-							</h1>
-						</div>
+								<h1
+									className='w-6 text-center text-black'
+								>
+									1
+								</h1>
+								<h1
+									className='w-1/2 text-center text-black'
+								>
+									Bombardiro Crocodilo
+								</h1>
+								<h1
+									className='w-1/4  text-center text-black'
+								>
+									2021412-N
+								</h1>
+								<h1
+									className='w-1/6 text-center text-black'
+								>
+									<FontAwesomeIcon icon={faCheckCircle} />
+								</h1>
+							</div>
 						</div>
 					</div>
 
