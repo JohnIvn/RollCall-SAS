@@ -1,8 +1,6 @@
 import { useState } from "react"
 
-export default function Card1({ Label, Toggle, CardStatus, Content, ButtonType, CurrentTime, OnProceed, OnClose, FormValues, TogglePassword }) {
-
-	
+export default function Card1({ Label, Toggle, CardStatus, Content, ButtonType, CurrentTime, OnProceed, OnClose, Type }) {
 	const Wrapper = ({ children }) => (
 		<div
 			className="flex flex-col justify-start items-center h-2/3 w-full"
