@@ -1,8 +1,11 @@
+import { Op } from "sequelize";
+import dayjs from "dayjs";
 import Test from "../Models/testModel.js";
 import Banned from "../Models/bannedModel.js";
 import { studentAccount } from "../Models/studentAccountModel.js";
+import Room1 from "../Models/room1Model.js";
 
-let lastScannedCard = null; 
+let lastScannedCard = null;
 
 export const saveTestData = async (data) => {
   try {
@@ -30,20 +33,34 @@ export const saveTestData = async (data) => {
       where: { cardNumber: cleanedData },
     });
 
-    if (student) {
-      const message = `Hello, ${student.first_name} ${student.last_name}!`;
-
-      const newTest = await Test.create({
-        test_hex: cleanedData,
-        message: message,
-      });
-
-      console.log("Data logged:", newTest);
-      return newTest;
-    } else {
+    if (!student) {
       console.log("Card not registered to any student. Data not logged.");
       return null;
     }
+
+    const currentTime = dayjs().format("HH:mm");
+
+    const roomEntry = await Room1.findOne({
+      where: {
+        Time_In: { [Op.lte]: currentTime },
+        Time_Out: { [Op.gte]: currentTime },
+      },
+    });
+
+    let subject = roomEntry ? roomEntry.Subjects : null;
+
+    console.log(
+      `Current time: ${currentTime}, Assigned subject: ${subject || "None"}`
+    );
+
+    const newTest = await Test.create({
+      test_hex: cleanedData,
+      timein: currentTime,
+      subject: subject,
+    });
+
+    console.log(`Data logged for ${cleanedData}:`, newTest);
+    return newTest;
   } catch (error) {
     console.error("Error saving test data:", error);
   }

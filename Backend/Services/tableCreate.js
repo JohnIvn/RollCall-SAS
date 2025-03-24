@@ -11,6 +11,7 @@ import Section from "../Models/sectionModel.js";
 import Course from "../Models/courseModel.js";
 import Test from "../Models/testModel.js";
 import Banned from "../Models/bannedModel.js";
+import Room1 from "../Models/room1Model.js";
 
 async function createTableUserAccounts() {
   try {
@@ -103,6 +104,15 @@ async function createTableBannedTable() {
   }
 }
 
+async function createTableRoom1Table() {
+  try {
+    await Room1.sync({ alter: false });
+    console.log("Room1 table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Room1 table", error);
+  }
+}
+
 export {
   createTableUserAccounts,
   createTableStudentUnhashedccounts,
@@ -113,4 +123,5 @@ export {
   createTableCourseTable,
   createTableTestTable,
   createTableBannedTable,
+  createTableRoom1Table,
 };

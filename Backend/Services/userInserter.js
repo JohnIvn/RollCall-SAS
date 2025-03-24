@@ -64,10 +64,10 @@ export const insertStudentIfNotExist = async () => {
         password: hashedPassword,
       };
 
-      await studentAccount.create(teacherData);
+      await studentAccount.create(studentData);
 
       await studentUnhashedAccount.create({
-        userId: studentData.teacherNumber, 
+        userId: studentData.userId, 
         email: studentData.email,
         password: password, 
       });

@@ -1,31 +1,31 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../database.js";
 
-class TestModel extends Model {}
+class Room1Model extends Model {}
 
-const Test = TestModel.init(
+const Room1 = Room1Model.init(
   {
-    test_id: {
+    Room1_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    test_hex: {
+    Subjects: {
       type: DataTypes.STRING,
     },
-    timein: {
+    Time_In: {
       type: DataTypes.STRING,
     },
-    subject: {
+    Time_Out: {
       type: DataTypes.STRING,
     },
   },
   {
     sequelize: db,
-    modelName: "TestModel",
-    tableName: "Test_Table",
+    modelName: "Room1Model",
+    tableName: "Room1_Table",
     timestamps: true,
   }
 );
 
-export default Test;
+export default Room1;
