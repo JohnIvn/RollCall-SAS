@@ -11,9 +11,9 @@
 // PIN 23 MOSI
 // 3.3v and GND
 
-const char* ssid = "ZTE_2.4G_emHexQ";
-const char* password = "ex3pFTqm";
-const char* websocket_server = "ws://192.168.1.7:3001";
+const char* ssid = "A";
+const char* password = "aaaaaaaaa";
+const char* websocket_server = "ws://192.168.216.5:3001";
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 using namespace websockets;
