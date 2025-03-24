@@ -20,6 +20,11 @@ const studentAccount = studentAccountModel.init(
       allowNull: true,
       unique: true,
     },
+    cardNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
+    },
     first_name: {
       type: DataTypes.STRING,
       allowNull: true,

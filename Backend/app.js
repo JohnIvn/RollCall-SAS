@@ -13,6 +13,8 @@ import {
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,
+  createTableTestTable,
+  createTableBannedTable,
 } from "./Services/tableCreate.js";
 import {
   insertSubjectIfNotExist,
@@ -20,6 +22,7 @@ import {
   insertCourseIfNotExist,
 } from "./Services/valueInserter.js";
 import { insertTeacherIfNotExist } from "./Services/userInserter.js";
+import { saveTestData } from "./Controllers/testController.js";
 
 dotenv.config();
 const app = express();
@@ -40,6 +43,7 @@ async function initializeApp() {
     await createTableStudentUnhashedccounts();
     await createTableTeacherAccounts();
     await createTabletTeacherUnhashedccounts();
+    await createTableTestTable();
 
     console.log("Tables have been created or checked.");
 
@@ -57,9 +61,17 @@ async function initializeApp() {
     wss.on("connection", (ws) => {
       console.log("New WebSocket connection established.");
 
-      ws.on("message", (message) => {
-        console.log("Received:", message.toString());
-        ws.send(`Server received: ${message}`);
+      ws.on("message", async (message) => {
+        const receivedData = message.toString();
+        console.log("Received:", receivedData);
+
+        const savedData = await saveTestData(receivedData);
+
+        if (savedData) {
+          ws.send(`Server received and saved: ${receivedData}`);
+        } else {
+          ws.send("Message was ignored due to filtering.");
+        }
       });
 
       ws.on("close", () => {

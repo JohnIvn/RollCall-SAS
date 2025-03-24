@@ -9,6 +9,8 @@ import {
 import Subject from "../Models/subjectsModel.js";
 import Section from "../Models/sectionModel.js";
 import Course from "../Models/courseModel.js";
+import Test from "../Models/testModel.js";
+import Banned from "../Models/bannedID.js";
 
 async function createTableUserAccounts() {
   try {
@@ -73,6 +75,24 @@ async function createTableCourseTable() {
   }
 }
 
+async function createTableTestTable() {
+  try {
+    await Test.sync({ alter: false });
+    console.log("Test table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Test table", error);
+  }
+}
+
+async function createTableBannedTable() {
+  try {
+    await Banned.sync({ alter: false });
+    console.log("Banned table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Banned table", error);
+  }
+}
+
 export {
   createTableUserAccounts,
   createTableStudentUnhashedccounts,
@@ -81,4 +101,6 @@ export {
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,
+  createTableTestTable,
+  createTableBannedTable,
 };
