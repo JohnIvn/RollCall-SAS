@@ -14,7 +14,7 @@ export default function AdminRouter() {
 				className='flex flex-col justify-start items-center pt-16 w-full h-auto overflow-y-auto'
 			>
 				<Routes>
-					<Route path="" element={<AdminPage />} />
+					<Route path="dashboard" element={<AdminPage />} />
 				</Routes>
 			</div>
 		</section>
