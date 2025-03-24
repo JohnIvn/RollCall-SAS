@@ -1,5 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../database.js";
+import Subject from "../Models/subjectsModel.js";
+import { studentAccount } from "./studentAccountModel.js";
 
 class TestModel extends Model {}
 
@@ -12,12 +14,20 @@ const Test = TestModel.init(
     },
     test_hex: {
       type: DataTypes.STRING,
+      references: {
+        model: studentAccount,
+        key: "cardNumber",
+      },
     },
     timein: {
       type: DataTypes.STRING,
     },
     subject: {
       type: DataTypes.STRING,
+      references: {
+        model: Subject,
+        key: "subject_code",
+      },
     },
   },
   {

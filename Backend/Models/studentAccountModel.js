@@ -1,5 +1,5 @@
 import db from "../database.js";
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import dotenv from "dotenv";
 import Section from "./sectionModel.js";
 import Course from "./courseModel.js";
