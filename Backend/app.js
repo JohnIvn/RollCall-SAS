@@ -22,7 +22,10 @@ import {
   insertCourseIfNotExist,
   insertBannedIfNotExist,
 } from "./Services/valueInserter.js";
-import { insertTeacherIfNotExist } from "./Services/userInserter.js";
+import {
+  insertTeacherIfNotExist,
+  insertStudentIfNotExist,
+} from "./Services/userInserter.js";
 import { saveTestData } from "./Controllers/testController.js";
 
 dotenv.config();
@@ -53,6 +56,7 @@ async function initializeApp() {
     await insertSectionIfNotExist();
     await insertCourseIfNotExist();
     await insertTeacherIfNotExist();
+    await insertStudentIfNotExist();
     await insertBannedIfNotExist();
 
     const server = app.listen(process.env.WS_PORT, () => {

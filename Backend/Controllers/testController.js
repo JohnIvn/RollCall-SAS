@@ -1,5 +1,6 @@
 import Test from "../Models/testModel.js";
 import Banned from "../Models/bannedModel.js";
+import { studentAccount } from "../Models/studentAccountModel.js";
 
 export const saveTestData = async (data) => {
   try {
@@ -10,13 +11,27 @@ export const saveTestData = async (data) => {
     });
 
     if (bannedEntry) {
-      console.log(`Banned card detected: ${cleanedData}. Data not saved.`);
+      console.log(`Banned card detected: ${cleanedData}. Data not logged.`);
       return null;
     }
+    const student = await studentAccount.findOne({
+      where: { cardNumber: cleanedData },
+    });
 
-    const newTest = await Test.create({ test_hex: cleanedData });
-    console.log("Data saved:", newTest);
-    return newTest;
+    if (student) {
+      const message = `Hello, ${student.first_name} ${student.last_name}!`;
+
+      const newTest = await Test.create({
+        test_hex: cleanedData,
+        message: message,
+      });
+
+      console.log("Data logged:", newTest);
+      return newTest;
+    } else {
+      console.log("Card not registered to any student. Data not logged.");
+      return null;
+    }
   } catch (error) {
     console.error("Error saving test data:", error);
   }
