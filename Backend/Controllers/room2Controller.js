@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import dayjs from "dayjs";
-import Test from "../Models/testModel.js";
+import Test from "../Models/attendanceModel.js";
 import Banned from "../Models/bannedModel.js";
 import { studentAccount } from "../Models/studentAccountModel.js";
 import Room2 from "../Models/room2Model.js";
@@ -54,7 +54,7 @@ export const room2Switch = async (data) => {
     );
 
     const newTest = await Test.create({
-      test_hex: cleanedData,
+      Attendance_hex: cleanedData,
       timein: currentTime,
       subject: subject,
     });

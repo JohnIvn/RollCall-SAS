@@ -9,7 +9,7 @@ import {
 import Subject from "../Models/subjectsModel.js";
 import Section from "../Models/sectionModel.js";
 import Course from "../Models/courseModel.js";
-import Test from "../Models/testModel.js";
+import Attendance from "../Models/attendanceModel.js";
 import Banned from "../Models/bannedModel.js";
 import Room1 from "../Models/room1Model.js";
 import Room2 from "../Models/room2Model.js";
@@ -87,12 +87,12 @@ async function createTableCourseTable() {
   }
 }
 
-async function createTableTestTable() {
+async function createTableAttendanceTable() {
   try {
-    await Test.sync({ alter: false });
-    console.log("Test table is checked and updated if necessary");
+    await Attendance.sync({ alter: false });
+    console.log("Attendance table is checked and updated if necessary");
   } catch (error) {
-    console.error("Error checking/updating Test table", error);
+    console.error("Error checking/updating Attendance table", error);
   }
 }
 
@@ -131,7 +131,7 @@ export {
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,
-  createTableTestTable,
+  createTableAttendanceTable,
   createTableBannedTable,
   createTableRoom1Table,
   createTableRoom2Table,

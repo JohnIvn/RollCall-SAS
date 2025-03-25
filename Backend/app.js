@@ -13,7 +13,7 @@ import {
   createTableSectionTable,
   createTableSubjectTable,
   createTableCourseTable,
-  createTableTestTable,
+  createTableAttendanceTable,
   createTableBannedTable,
   createTableRoom1Table,
   createTableRoom2Table,
@@ -52,7 +52,7 @@ async function initializeApp() {
     await createTableStudentUnhashedccounts();
     await createTableTeacherAccounts();
     await createTabletTeacherUnhashedccounts();
-    await createTableTestTable();
+    await createTableAttendanceTable();
     await createTableBannedTable();
     await createTableRoom1Table();
     await createTableRoom2Table();

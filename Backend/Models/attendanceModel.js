@@ -1,18 +1,18 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../database.js";
-import Subject from "../Models/subjectsModel.js";
+import Subject from "./subjectsModel.js";
 import { studentAccount } from "./studentAccountModel.js";
 
-class TestModel extends Model {}
+class AttendanceModel extends Model {}
 
-const Test = TestModel.init(
+const Attendance = AttendanceModel.init(
   {
-    test_id: {
+    Attendance_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    test_hex: {
+    Attendance_hex: {
       type: DataTypes.STRING,
       references: {
         model: studentAccount,
@@ -32,10 +32,10 @@ const Test = TestModel.init(
   },
   {
     sequelize: db,
-    modelName: "TestModel",
-    tableName: "Test_Table",
+    modelName: "Attendance",
+    tableName: "Attendance_Table",
     timestamps: true,
   }
 );
 
-export default Test;
+export default Attendance;
