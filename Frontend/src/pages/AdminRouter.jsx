@@ -3,6 +3,7 @@ import TestPage from './TestPage'
 import AdminPage from './Admin'
 import AdminHeader from '../partials/AdminHeader'
 import StudentsPage from './Students'
+import StudentsProfile from './StudentsProfile'
 
 export default function AdminRouter() {
 
@@ -17,6 +18,7 @@ export default function AdminRouter() {
 				<Routes>
 					<Route path="dashboard" element={<AdminPage />} />
 					<Route path="students" element={<StudentsPage />} />
+					<Route path="students/profile" element={<StudentsProfile />} />
 				</Routes>
 			</div>
 		</section>

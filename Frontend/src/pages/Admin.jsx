@@ -147,7 +147,7 @@ export default function AdminPage() {
 
 
 				<div
-					className="flex flex-col justify-start items-center w-3/5 h-full rounded-2xl overflow-hidde"
+					className="flex flex-col justify-start items-center w-3/5 h-full rounded-2xl overflow-hidden"
 				>
 
 					<div

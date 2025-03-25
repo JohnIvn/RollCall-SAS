@@ -4,9 +4,6 @@ import uccImg from '/ucc.png';
 export default function AdminHeader() {
 	const NavUrls = [
 		{
-			label: "Courses", link: "/admin/courses"
-		},
-		{
 			label: "Students", link: "/admin/students"
 		},
 		{
@@ -36,7 +33,7 @@ export default function AdminHeader() {
 				</Link>
 
 				<div
-					className='flex justify-between items-center w-2/5 p-8'
+					className='flex justify-evenly items-center w-2/5 p-8'
 				>
 					{NavUrls.map((item, index) => (
 
