@@ -1,9 +1,30 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCheckCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCheckCircle, faCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 import UccLogo from '/ucc.png'
+import { useState } from 'react'
 
 
 export default function AdminPage() {
+
+	// All alterable depending on the logic
+	const [professor, setProfessor] = useState([
+		{ img: null, name: "Jan Ivan Montenegro", course: "Database Management"}
+	]);
+	const [students, setStudents] = useState([
+		{ name: "Matthew Gabriel Cania", studentNumber: "20231104-N", status: true},
+		{ name: "Lebron James", studentNumber: "20231124-N", status: true},
+		{ name: "Ezra Rizzler", studentNumber: "20231124-N", status: true},
+		{ name: "JVincent Batumbakal", studentNumber: "20231124-N", status: false},
+	  ]);
+
+	const [schedule, setSchedules] = useState([
+		{ day: "Mon", time: "10:00AM to 12:00PM", status: true },
+		{ day: "Tue", time: "1:00PM to 3:00PM", status: true },
+		{ day: "Wed", time: "8:00AM to 10:00AM", status: true },
+		{ day: "Fri", time: "11:00AM to 5:00PM", status: false }
+	  ]);
+
+
 
 	return (
 		<section
@@ -24,7 +45,7 @@ export default function AdminPage() {
 						<div
 							className='flex rounded-full h-26 w-26 border-2 border-emerald-800 overflow-hidden'
 						>
-							<img src={UccLogo} alt="" />
+							<img src={professor.length > 0 && professor[0].img ? professor[0].img : UccLogo} alt="" />
 						</div>
 						<div
 							className='flex flex-col items-center px-2 justify-center h-full w-2/3'
@@ -32,12 +53,12 @@ export default function AdminPage() {
 							<h1
 								className='w-full text-start text-md font-semibold'
 							>
-								Matthew Gabriel M. Cania
+								{professor.length > 0 ? professor[0].name : "Jan Ivan Montenegro"}
 							</h1>
 							<p
 								className='text-sm w-full text-start'
 							>
-								Database Management Professor
+								{professor.length > 0 ? professor[0].course : "Database Management"}
 							</p>
 						</div>
 
@@ -51,6 +72,8 @@ export default function AdminPage() {
 						>
 							Registered Subject:
 						</h1>
+
+						{/* Bound to be changed when datas are properly created (Custom Selection sucks) */}
 						<div
 							className='flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2'
 						>
@@ -70,79 +93,23 @@ export default function AdminPage() {
 							Schedule:
 						</h1>
 
-						<div
-							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
-						>
-							<FontAwesomeIcon
-								className='flex w-16 text-2xl text-black'
-								icon={faCheckCircle}
-							/>
-							<h1
-								className='flex justify-start items-center w-full text-md mx-2 text-black'
+						{schedule.length > 0 && schedule.map((item, index) => (
+							<div
+								className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
+								key={index}
 							>
-								Mon -  10:00AM to 12:00PM
-							</h1>
-						</div>
-
-						<div
-							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
-						>
-							<FontAwesomeIcon
-								className='flex w-16 text-2xl text-black'
-								icon={faCheckCircle}
-							/>
-							<h1
-								className='flex justify-start items-center w-full text-md mx-2 text-black'
-							>
-								Mon -  10:00AM to 12:00PM
-							</h1>
-						</div>
-
-
-						<div
-							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
-						>
-							<FontAwesomeIcon
-								className='flex w-16 text-2xl text-black'
-								icon={faCheckCircle}
-							/>
-							<h1
-								className='flex justify-start items-center w-full text-md mx-2 text-black'
-							>
-								Mon -  10:00AM to 12:00PM
-							</h1>
-						</div>
-
-						<div
-							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
-						>
-							<FontAwesomeIcon
-								className='flex w-16 text-2xl text-black'
-								icon={faCheckCircle}
-							/>
-							<h1
-								className='flex justify-start items-center w-full text-md mx-2 text-black'
-							>
-								Mon -  10:00AM to 12:00PM
-							</h1>
-						</div>
-
-						<div
-							className='flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2'
-						>
-							<FontAwesomeIcon
-								className='flex w-16 text-2xl text-black'
-								icon={faCheckCircle}
-							/>
-							<h1
-								className='flex justify-start items-center w-full text-md mx-2 text-black'
-							>
-								Mon -  10:00AM to 12:00PM
-							</h1>
-						</div>
-
+								<FontAwesomeIcon
+									className='flex w-16 text-2xl text-black'
+									icon={item.status ? faCheckCircle : faCircle}
+								/>
+								<h1
+									className='flex justify-start items-center w-full text-md mx-2 text-black'
+								>
+									{item.day} - {item.time}
+								</h1>
+							</div>
+						))}
 					</div>
-
 				</div>
 
 
@@ -209,33 +176,37 @@ export default function AdminPage() {
 							</h1>
 						</div>
 						<div
-							className='flex w-full h-full bg-white'
+							className='flex flex-col w-full h-full bg-white'
 						>
+							{students.map((item, index) => (
 
-							<div
+								
+								<div
+								key={index}
 								className='flex justify-center items-center h-10 w-full'
-							>
+								>
 								<h1
 									className='w-6 text-center text-black'
-								>
-									1
+									>
+									{index +1}
 								</h1>
 								<h1
 									className='w-1/2 text-center text-black'
-								>
-									Bombardiro Crocodilo
+									>
+									{item.name}
 								</h1>
 								<h1
 									className='w-1/4  text-center text-black'
-								>
-									2021412-N
+									>
+									{item.studentNumber}
 								</h1>
 								<h1
 									className='w-1/6 text-center text-black'
 								>
-									<FontAwesomeIcon icon={faCheckCircle} />
+									<FontAwesomeIcon icon={item.status ? faCheckCircle : faCircle} />
 								</h1>
 							</div>
+							))}
 						</div>
 					</div>
 

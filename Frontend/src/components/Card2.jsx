@@ -6,12 +6,14 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Card1({ CardStatus, OnClose, Label, Type }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [error, setErrors] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +28,7 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
   };
 
   const handleLogin = () => {
+    setErrors(null)
     const ws = new WebSocket("ws://localhost:3002");
 
     ws.onopen = () => {
@@ -42,15 +45,33 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
       const response = JSON.parse(event.data);
 
       if (response.type === "success") {
-        alert("Login successful!");
-        navigate("/dashboard");
+        localStorage.setItem("token", response.token);
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Logging in",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          willClose: () => {
+            navigate("/admin/dashboard");
+          }
+        });
       } else {
-        alert(response.message);
+        setErrors(response.message)
+        setTimeout(() => setErrors(null), 2000)
       }
     };
 
     ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Server Error",
+        text: "Sorry for the inconvenience! :D",
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
     };
   };
 
@@ -121,6 +142,14 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
                 </button>
               </div>
             </div>
+            {error &&
+            <h1
+              className="flex w-8/9 justify-center items-center text-start text-red-600 my-4"
+            >
+              {error}
+            </h1>
+
+            }
           </form>
         )}
       </div>

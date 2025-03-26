@@ -1,8 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCheckCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCheckCircle, faCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 import UccLogo from '/ucc.png'
+import { useState } from 'react';
 
 export default function StudentsPage() {
+
+	const [students, setStudents] = useState([
+		{ name: "Matthew Gabriel Cania", studentNumber: "20231104-N", status: true },
+		{ name: "Lebron James", studentNumber: "20231124-N", status: true },
+		{ name: "Ezra Rizzler", studentNumber: "20231124-N", status: true },
+		{ name: "JVincent Batumbakal", studentNumber: "20231124-N", status: false },
+	]);
 
 	return (
 		<section
@@ -75,33 +83,37 @@ export default function StudentsPage() {
 							</h1>
 						</div>
 						<div
-							className='flex w-full h-full bg-white'
+							className='flex flex-col w-full h-full bg-white'
 						>
+							{students.map((item, index) => (
 
-							<div
-								className='flex justify-center items-center h-10 w-full'
-							>
-								<h1
-									className='w-6 text-center text-black'
+
+								<div
+									key={index}
+									className='flex justify-center items-center h-10 w-full'
 								>
-									1
-								</h1>
-								<h1
-									className='w-1/2 text-center text-black'
-								>
-									Bombardiro Crocodilo
-								</h1>
-								<h1
-									className='w-1/4  text-center text-black'
-								>
-									2021412-N
-								</h1>
-								<h1
-									className='w-1/6 text-center text-black'
-								>
-									<FontAwesomeIcon icon={faCheckCircle} />
-								</h1>
-							</div>
+									<h1
+										className='w-6 text-center text-black'
+									>
+										{index + 1}
+									</h1>
+									<h1
+										className='w-1/2 text-center text-black'
+									>
+										{item.name}
+									</h1>
+									<h1
+										className='w-1/4  text-center text-black'
+									>
+										{item.studentNumber}
+									</h1>
+									<h1
+										className='w-1/6 text-center text-black'
+									>
+										<FontAwesomeIcon icon={item.status ? faCheckCircle : faCircle} />
+									</h1>
+								</div>
+							))}
 						</div>
 					</div>
 				</div>

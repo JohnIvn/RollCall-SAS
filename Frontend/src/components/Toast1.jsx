@@ -1,5 +1,5 @@
 
-export default function Toast1 (){
+export default function Toast1 ({Text, OnClose}){
 
 	return(
 		<div
@@ -14,7 +14,7 @@ export default function Toast1 (){
 			<h1
 				className="text-white"
 			>
-				Hello
+				{Text || "404 For"}
 
 			</h1>
 
