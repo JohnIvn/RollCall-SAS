@@ -1,13 +1,17 @@
+
 import { handleLogin } from "../Controllers/loginController.js";
 
 export function handleWebSocketMessage(ws, message) {
   try {
-    const data = JSON.parse(message);
+    const data = message ? JSON.parse(message) : null;
 
     switch (data.type) {
       case "login":
         handleLogin(ws, data);
         break;
+      // case "logout":
+      //   handleLogout(ws);
+      //   break;
       default:
         ws.send(
           JSON.stringify({ type: "error", message: "Invalid request type" })

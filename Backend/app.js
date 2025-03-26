@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import jwt from 'jsonwebtoken'
 import cors from "cors";
 import { WebSocketServer } from "ws";
 import createDatabaseIfNotExists from "./Services/databaseCreate.js";
