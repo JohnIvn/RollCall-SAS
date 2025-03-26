@@ -56,9 +56,8 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
 
   return (
     <div
-      className={`${
-        CardStatus ? "flex" : "hidden"
-      } flex-col justify-between items-center h-1/2 w-1/3 bg-white rounded-3xl fixed animate-move-down`}
+      className={`${CardStatus ? "flex" : "hidden"
+        } flex-col justify-between items-center h-1/2 w-1/3 bg-white rounded-3xl fixed animate-move-down`}
     >
       <h1 className="flex justify-start items-center text-center px-6 w-full h-12 text-[#2D2D2D] text-2xl border-b-gray-400 border-b-1">
         {Label}
@@ -136,12 +135,15 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
         >
           Close
         </button>
-        <button
-          className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-32 rounded-md bg-blue-400 outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
-          onClick={handleLogin}
-        >
-          Proceed
-        </button>
+        {Type === "Admin" && (
+          <button
+            className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-32 rounded-md bg-blue-400 outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
+            onClick={handleLogin}
+          >
+            Proceed
+          </button>
+        )
+        }
       </div>
     </div>
   );
