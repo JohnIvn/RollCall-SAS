@@ -30,8 +30,8 @@ import {
   insertTeacherIfNotExist,
   insertStudentIfNotExist,
 } from "./Services/userInserter.js";
-import { room1Switch } from "./Controllers/room1Controller.js";
-import { room2Switch } from "./Controllers/room2Controller.js";
+import { startWebSocketServer } from "./Websockets/esp32Socket.js";
+import { startFrontendWebsocket } from "./Websockets/frontendSocket.js";
 
 dotenv.config();
 const app = express();
@@ -74,52 +74,8 @@ async function initializeApp() {
       console.log(`App is listening on port: ${process.env.WS_PORT}`);
     });
 
-    const wss = new WebSocketServer({ server });
-
-    wss.on("connection", (ws) => {
-      console.log("New WebSocket connection established.");
-
-      ws.on("message", async (message) => {
-        const receivedData = message.toString();
-        console.log("Received:", receivedData);
-
-        let savedData;
-        const WS_SWITCH = parseInt(process.env.WS_SWITCH, 10);
-        console.log("Room switch is on Room", process.env.WS_SWITCH);
-
-        switch (WS_SWITCH) {
-          case 1:
-            savedData = await room1Switch(receivedData);
-            break;
-          case 2:
-            savedData = await room2Switch(receivedData);
-            break;
-          case 3:
-            savedData = await room3Switch(receivedData);
-            break;
-          case 4:
-            savedData = await room4Switch(receivedData);
-            break;
-          case 5:
-            savedData = await room5Switch(receivedData);
-            break;
-          default:
-            console.log("Invalid WS_SWITCH value, ignoring message.");
-            ws.send("Invalid WebSocket mode.");
-            return;
-        }
-
-        if (savedData) {
-          ws.send(`Server received and saved: ${receivedData}`);
-        } else {
-          ws.send("Message was ignored due to filtering.");
-        }
-      });
-
-      ws.on("close", () => {
-        console.log("WebSocket connection closed.");
-      });
-    });
+    startWebSocketServer(server);
+    startFrontendWebsocket(server);
   } catch (error) {
     console.error("Error initializing the application:", error);
     process.exit(1);
