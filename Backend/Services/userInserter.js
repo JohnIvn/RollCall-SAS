@@ -7,6 +7,7 @@ import {
   studentAccount,
   studentUnhashedAccount,
 } from "../Models/studentAccountModel.js";
+import studentSubjects from "../Models/studentAccountSubjects.js";
 
 const saltRounds = 10;
 
@@ -46,8 +47,11 @@ export const insertTeacherIfNotExist = async () => {
   }
 };
 
+
+
 export const insertStudentIfNotExist = async () => {
   try {
+    const saltRounds = 10;
     const existingStudents = await studentAccount.findAll();
 
     if (existingStudents.length === 0) {
@@ -223,17 +227,51 @@ export const insertStudentIfNotExist = async () => {
         },
       ];
 
+      // Insert student accounts
       await studentAccount.bulkCreate(studentData);
 
+      // Insert unhashed data
       const unhashedData = studentData.map((student, index) => ({
         userId: student.userId,
         email: student.email,
         password: passwords[index],
       }));
-
       await studentUnhashedAccount.bulkCreate(unhashedData);
 
-      console.log("Students inserted successfully in both tables.");
+      // Prepare student subjects data
+      const studentSubjectsData = studentData.map((student) => ({
+        userId: student.userId,
+        studentNumber: student.studentNumber,
+        section: student.section,
+        subject2: null,
+        subject2_attendance: null,
+        subject2_teacher: null,
+        subject3: null,
+        subject3_attendance: null,
+        subject3_teacher: null,
+        subject4: null,
+        subject4_attendance: null,
+        subject4_teacher: null,
+        subject5: null,
+        subject5_attendance: null,
+        subject5_teacher: null,
+        subject6: null,
+        subject6_attendance: null,
+        subject6_teacher: null,
+        subject7: null,
+        subject7_attendance: null,
+        subject7_teacher: null,
+        subject8: null,
+        subject8_attendance: null,
+        subject8_teacher: null,
+      }));
+
+      // Insert student subjects
+      await studentSubjects.bulkCreate(studentSubjectsData);
+
+      console.log(
+        "Students, unhashed accounts, and subject records inserted successfully."
+      );
     } else {
       console.log("Students already exist, skipping insertion.");
     }

@@ -17,6 +17,7 @@ import {
   createTableRoom1Table,
   createTableRoom2Table,
   createTableDayTable,
+  createTableStudentsSubjectsTable,
 } from "./Services/tableCreate.js";
 import {
   insertSubjectIfNotExist,
@@ -54,6 +55,7 @@ async function initializeApp() {
     await createTableStudentUnhashedccounts();
     await createTableTeacherAccounts();
     await createTabletTeacherUnhashedccounts();
+    await createTableStudentsSubjectsTable();
     await createTableDayTable();
     await createTableAttendanceTable();
     await createTableBannedTable();
@@ -74,7 +76,7 @@ async function initializeApp() {
 
     console.log("Values have been inserted or checked.");
 
-    await logToday();
+    logToday();
 
     const server = app.listen(process.env.WS_PORT, () => {
       console.log(`App is listening on port: ${process.env.WS_PORT}`);
