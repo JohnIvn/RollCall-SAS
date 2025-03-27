@@ -1,8 +1,11 @@
 import { DataTypes, Model } from "sequelize";
+import dotenv, { config } from "dotenv";
 import db from "../database.js";
 import Subject from "./subjectsModel.js";
 import { studentAccount } from "./studentAccountModel.js";
 import Day from"./dayModel.js";
+
+dotenv.config()
 
 class AttendanceModel extends Model {}
 
@@ -12,6 +15,13 @@ const Attendance = AttendanceModel.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: studentAccount,
+        key: "userID",
+      },
     },
     Attendance_hex: {
       type: DataTypes.STRING,
@@ -36,6 +46,10 @@ const Attendance = AttendanceModel.init(
         model: Subject,
         key: "subject_code",
       },
+    },
+    room: {
+      type: DataTypes.STRING,
+      defaultValue: process.env.WS_SWITCH,
     },
   },
   {

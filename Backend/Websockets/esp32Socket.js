@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { WebSocketServer } from "ws";
 import { room1Switch } from "../Controllers/room1Controller.js";
-import { room2Switch } from "../Controllers/room2Controller.js";
+import room2Switch  from "../Controllers/room2Controller.js";
 
 dotenv.config();
 

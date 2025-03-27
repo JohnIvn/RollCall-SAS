@@ -4,10 +4,11 @@ import Test from "../Models/attendanceModel.js";
 import Banned from "../Models/bannedModel.js";
 import { studentAccount } from "../Models/studentAccountModel.js";
 import Room2 from "../Models/room2Model.js";
+import { logToday } from "../Services/dayToday.js";
 
 let lastScannedCard = null;
 
-export const room2Switch = async (data) => {
+const Room2Switch = async (data) => {
   try {
     const cleanedData = data.replace(/^Card Scanned:\s*/, "");
 
@@ -38,6 +39,12 @@ export const room2Switch = async (data) => {
       return null;
     }
 
+    const { userId, first_name, last_name } = student;
+
+    console.log(
+      `Student Identified: ${first_name} ${last_name}, User ID: ${userId}`
+    );
+
     const currentTime = dayjs().format("HH:mm");
     const currentDay = logToday();
 
@@ -59,14 +66,20 @@ export const room2Switch = async (data) => {
 
     const newTest = await Test.create({
       Attendance_hex: cleanedData,
+      userId: userId,
       Day: currentDay,
       timein: currentTime,
       subject: subject,
     });
 
-    console.log(`Data logged for ${cleanedData}:`, newTest);
+    console.log(
+      `Data logged for ${cleanedData} (User ID: ${userId}):`,
+      newTest
+    );
     return newTest;
   } catch (error) {
     console.error("Error saving test data:", error);
   }
 };
+
+export default Room2Switch;
