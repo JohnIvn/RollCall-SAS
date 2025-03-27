@@ -39,9 +39,13 @@ export const room2Switch = async (data) => {
     }
 
     const currentTime = dayjs().format("HH:mm");
+    const currentDay = logToday();
+
+    console.log(`Checking schedule for ${currentDay} at ${currentTime}...`);
 
     const roomEntry = await Room2.findOne({
       where: {
+        Day: currentDay,
         Time_In: { [Op.lte]: currentTime },
         Time_Out: { [Op.gte]: currentTime },
       },
@@ -55,6 +59,7 @@ export const room2Switch = async (data) => {
 
     const newTest = await Test.create({
       Attendance_hex: cleanedData,
+      Day: currentDay,
       timein: currentTime,
       subject: subject,
     });

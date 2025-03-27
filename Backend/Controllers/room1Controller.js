@@ -4,6 +4,7 @@ import Test from "../Models/attendanceModel.js";
 import Banned from "../Models/bannedModel.js";
 import { studentAccount } from "../Models/studentAccountModel.js";
 import Room1 from "../Models/room1Model.js";
+import { logToday } from "../Services/dayToday.js"; 
 
 let lastScannedCard = null;
 
@@ -39,9 +40,13 @@ export const room1Switch = async (data) => {
     }
 
     const currentTime = dayjs().format("HH:mm");
+    const currentDay = logToday();
+
+    console.log(`Checking schedule for ${currentDay} at ${currentTime}...`);
 
     const roomEntry = await Room1.findOne({
       where: {
+        Day: currentDay,
         Time_In: { [Op.lte]: currentTime },
         Time_Out: { [Op.gte]: currentTime },
       },
@@ -55,6 +60,7 @@ export const room1Switch = async (data) => {
 
     const newTest = await Test.create({
       Attendance_hex: cleanedData,
+      Day: currentDay, 
       timein: currentTime,
       subject: subject,
     });

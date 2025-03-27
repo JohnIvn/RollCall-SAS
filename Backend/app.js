@@ -1,9 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
 import cors from "cors";
-import { WebSocketServer } from "ws";
 import createDatabaseIfNotExists from "./Services/databaseCreate.js";
 import db from "./database.js";
 import {
@@ -35,6 +33,7 @@ import {
 } from "./Services/userInserter.js";
 import { startWebSocketServer } from "./Websockets/esp32Socket.js";
 import { startFrontendWebsocket } from "./Websockets/frontendSocket.js";
+import { logToday } from "./Services/dayToday.js";
 
 dotenv.config();
 const app = express();
@@ -55,9 +54,9 @@ async function initializeApp() {
     await createTableStudentUnhashedccounts();
     await createTableTeacherAccounts();
     await createTabletTeacherUnhashedccounts();
+    await createTableDayTable();
     await createTableAttendanceTable();
     await createTableBannedTable();
-    await createTableDayTable();
     await createTableRoom1Table();
     await createTableRoom2Table();
 
@@ -74,6 +73,8 @@ async function initializeApp() {
     await insertRoom2IfNotExist();
 
     console.log("Values have been inserted or checked.");
+
+    await logToday();
 
     const server = app.listen(process.env.WS_PORT, () => {
       console.log(`App is listening on port: ${process.env.WS_PORT}`);
