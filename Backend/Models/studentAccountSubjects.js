@@ -42,6 +42,26 @@ const studentSubjects = studentSubjectsModel.init(
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     },
+    subject1: {
+      type: DataTypes.STRING,
+      references: {
+        model: Subject,
+        key: "subject_code",
+      },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    },
+    subject1_attendance: {
+      type: DataTypes.STRING,
+    },
+    subject1_teacher: {
+      type: DataTypes.INTEGER,
+      unique: true,
+      references: {
+        model: teacherAccount,
+        key: "userId",
+      },
+    },
     subject2: {
       type: DataTypes.STRING,
       references: {

@@ -47,8 +47,6 @@ export const insertTeacherIfNotExist = async () => {
   }
 };
 
-
-
 export const insertStudentIfNotExist = async () => {
   try {
     const saltRounds = 10;
@@ -227,10 +225,8 @@ export const insertStudentIfNotExist = async () => {
         },
       ];
 
-      // Insert student accounts
       await studentAccount.bulkCreate(studentData);
 
-      // Insert unhashed data
       const unhashedData = studentData.map((student, index) => ({
         userId: student.userId,
         email: student.email,
@@ -238,7 +234,6 @@ export const insertStudentIfNotExist = async () => {
       }));
       await studentUnhashedAccount.bulkCreate(unhashedData);
 
-      // Prepare student subjects data
       const studentSubjectsData = studentData.map((student) => ({
         userId: student.userId,
         studentNumber: student.studentNumber,
@@ -266,7 +261,6 @@ export const insertStudentIfNotExist = async () => {
         subject8_teacher: null,
       }));
 
-      // Insert student subjects
       await studentSubjects.bulkCreate(studentSubjectsData);
 
       console.log(
