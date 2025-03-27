@@ -4,6 +4,8 @@ import CourseModel from "../Models/courseModel.js";
 import Banned from "../Models/bannedModel.js";
 import Room1 from "../Models/room1Model.js";
 import Room2 from "../Models/room2Model.js";
+import Room3 from "../Models/room3Model.js";
+import Room4 from "../Models/room4Model.js";
 import Day from "../Models/dayModel.js";
 
 export const insertSubjectIfNotExist = async () => {
@@ -247,6 +249,70 @@ export const insertRoom2IfNotExist = async () => {
     }
   } catch (error) {
     console.error("Error inserting Room2 List :", error);
+  }
+};
+
+export const insertRoom3IfNotExist = async () => {
+  try {
+    const existingSection = await Room3.findAll();
+
+    if (existingSection.length === 0) {
+      const Course = [
+        {
+          Room1_id: 1,
+          Subjects: "GEC 007",
+          Day: "Monday",
+          Time_In: "21:00",
+          Time_Out: "21:01",
+        },
+        {
+          Room1_id: 2,
+          Subjects: "PATHFIT 4",
+          Day: "Monday",
+          Time_In: "21:05",
+          Time_Out: "22:00",
+        },
+      ];
+
+      await Room3.bulkCreate(Course);
+      console.log("Room3 inserted successfully");
+    } else {
+      console.log("Room3 already exist, skipping insertion.");
+    }
+  } catch (error) {
+    console.error("Error inserting Room3 List :", error);
+  }
+};
+
+export const insertRoom4IfNotExist = async () => {
+  try {
+    const existingSection = await Room4.findAll();
+
+    if (existingSection.length === 0) {
+      const Course = [
+        {
+          Room1_id: 1,
+          Subjects: "GEC 007",
+          Day: "Monday",
+          Time_In: "21:00",
+          Time_Out: "21:01",
+        },
+        {
+          Room1_id: 2,
+          Subjects: "PATHFIT 4",
+          Day: "Monday",
+          Time_In: "21:05",
+          Time_Out: "22:00",
+        },
+      ];
+
+      await Room4.bulkCreate(Course);
+      console.log("Room4 inserted successfully");
+    } else {
+      console.log("Room4 already exist, skipping insertion.");
+    }
+  } catch (error) {
+    console.error("Error inserting Room4 List :", error);
   }
 };
 

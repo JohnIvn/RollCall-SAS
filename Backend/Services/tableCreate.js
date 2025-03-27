@@ -13,6 +13,8 @@ import Attendance from "../Models/attendanceModel.js";
 import Banned from "../Models/bannedModel.js";
 import Room1 from "../Models/room1Model.js";
 import Room2 from "../Models/room2Model.js";
+import Room3 from "../Models/room3Model.js";
+import Room4 from "../Models/room4Model.js";
 import Day from "../Models/dayModel.js";
 import studentSubjects from "../Models/studentAccountSubjects.js";
 
@@ -125,6 +127,24 @@ async function createTableRoom2Table() {
   }
 }
 
+async function createTableRoom3Table() {
+  try {
+    await Room3.sync({ alter: false });
+    console.log("Room3 table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Room3 table", error);
+  }
+}
+
+async function createTableRoom4Table() {
+  try {
+    await Room4.sync({ alter: false });
+    console.log("Room4 table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Room4 table", error);
+  }
+}
+
 async function createTableDayTable() {
   try {
     await Day.sync({ alter: false });
@@ -155,6 +175,8 @@ export {
   createTableBannedTable,
   createTableRoom1Table,
   createTableRoom2Table,
+  createTableRoom3Table,
+  createTableRoom4Table,
   createTableDayTable,
   createTableStudentsSubjectsTable,
 };

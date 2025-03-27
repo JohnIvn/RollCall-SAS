@@ -16,6 +16,8 @@ import {
   createTableBannedTable,
   createTableRoom1Table,
   createTableRoom2Table,
+  createTableRoom3Table,
+  createTableRoom4Table,
   createTableDayTable,
   createTableStudentsSubjectsTable,
 } from "./Services/tableCreate.js";
@@ -26,6 +28,8 @@ import {
   insertBannedIfNotExist,
   insertRoom1IfNotExist,
   insertRoom2IfNotExist,
+  insertRoom3IfNotExist,
+  insertRoom4IfNotExist,
   insertDayIfNotExist,
 } from "./Services/valueInserter.js";
 import {
@@ -61,6 +65,8 @@ async function initializeApp() {
     await createTableBannedTable();
     await createTableRoom1Table();
     await createTableRoom2Table();
+    await createTableRoom3Table();
+    await createTableRoom4Table();
 
     console.log("Tables have been created or checked.");
 
@@ -73,6 +79,8 @@ async function initializeApp() {
     await insertDayIfNotExist();
     await insertRoom1IfNotExist();
     await insertRoom2IfNotExist();
+    await insertRoom3IfNotExist();
+    await insertRoom4IfNotExist();
 
     console.log("Values have been inserted or checked.");
 
