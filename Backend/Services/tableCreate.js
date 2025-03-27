@@ -13,6 +13,7 @@ import Attendance from "../Models/attendanceModel.js";
 import Banned from "../Models/bannedModel.js";
 import Room1 from "../Models/room1Model.js";
 import Room2 from "../Models/room2Model.js";
+import Day from "../Models/dayModel.js";
 
 async function createTableUserAccounts() {
   try {
@@ -123,6 +124,15 @@ async function createTableRoom2Table() {
   }
 }
 
+async function createTableDayTable() {
+  try {
+    await Day.sync({ alter: false });
+    console.log("Day table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Day table", error);
+  }
+}
+
 export {
   createTableUserAccounts,
   createTableStudentUnhashedccounts,
@@ -135,4 +145,5 @@ export {
   createTableBannedTable,
   createTableRoom1Table,
   createTableRoom2Table,
+  createTableDayTable,
 };

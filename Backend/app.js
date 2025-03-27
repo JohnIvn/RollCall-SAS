@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 import cors from "cors";
 import { WebSocketServer } from "ws";
 import createDatabaseIfNotExists from "./Services/databaseCreate.js";
@@ -18,6 +18,7 @@ import {
   createTableBannedTable,
   createTableRoom1Table,
   createTableRoom2Table,
+  createTableDayTable,
 } from "./Services/tableCreate.js";
 import {
   insertSubjectIfNotExist,
@@ -26,6 +27,7 @@ import {
   insertBannedIfNotExist,
   insertRoom1IfNotExist,
   insertRoom2IfNotExist,
+  insertDayIfNotExist,
 } from "./Services/valueInserter.js";
 import {
   insertTeacherIfNotExist,
@@ -55,6 +57,7 @@ async function initializeApp() {
     await createTabletTeacherUnhashedccounts();
     await createTableAttendanceTable();
     await createTableBannedTable();
+    await createTableDayTable();
     await createTableRoom1Table();
     await createTableRoom2Table();
 
@@ -66,6 +69,7 @@ async function initializeApp() {
     await insertTeacherIfNotExist();
     await insertStudentIfNotExist();
     await insertBannedIfNotExist();
+    await insertDayIfNotExist();
     await insertRoom1IfNotExist();
     await insertRoom2IfNotExist();
 

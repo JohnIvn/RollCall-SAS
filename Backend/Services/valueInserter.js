@@ -4,6 +4,7 @@ import CourseModel from "../Models/courseModel.js";
 import Banned from "../Models/bannedModel.js";
 import Room1 from "../Models/room1Model.js";
 import Room2 from "../Models/room2Model.js";
+import Day from "../Models/dayModel.js";
 
 export const insertSubjectIfNotExist = async () => {
   try {
@@ -166,12 +167,14 @@ export const insertRoom1IfNotExist = async () => {
         {
           Room1_id: 1,
           Subjects: "IT 102",
+          Day: "Monday",
           Time_In: "21:00",
           Time_Out: "21:01",
         },
         {
           Room1_id: 2,
           Subjects: "CCS 106",
+          Day: "Monday",
           Time_In: "21:05",
           Time_Out: "22:00",
         },
@@ -196,12 +199,14 @@ export const insertRoom2IfNotExist = async () => {
         {
           Room1_id: 1,
           Subjects: "GEC 007",
+          Day: "Monday",
           Time_In: "21:00",
           Time_Out: "21:01",
         },
         {
           Room1_id: 2,
           Subjects: "PATHFIT 4",
+          Day: "Monday",
           Time_In: "21:05",
           Time_Out: "22:00",
         },
@@ -214,5 +219,51 @@ export const insertRoom2IfNotExist = async () => {
     }
   } catch (error) {
     console.error("Error inserting Room2 List :", error);
+  }
+};
+
+export const insertDayIfNotExist = async () => {
+  try {
+    const existingSection = await Day.findAll();
+
+    if (existingSection.length === 0) {
+      const Course = [
+        {
+          Room1_id: 1,
+          Day: "Monday",
+        },
+        {
+          Room1_id: 2,
+          Day: "Tuesday",
+        },
+        {
+          Room1_id: 3,
+          Day: "Wednesday",
+        },
+        {
+          Room1_id: 4,
+          Day: "Thursday",
+        },
+        {
+          Room1_id: 5,
+          Day: "Friday",
+        },
+        {
+          Room1_id: 6,
+          Day: "Saturday",
+        },
+        {
+          Room1_id: 7,
+          Day: "Sunday",
+        },
+      ];
+
+      await Day.bulkCreate(Course);
+      console.log("Day inserted successfully");
+    } else {
+      console.log("Day already exist, skipping insertion.");
+    }
+  } catch (error) {
+    console.error("Error inserting Day List :", error);
   }
 };
