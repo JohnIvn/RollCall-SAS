@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
 import { WebSocketServer } from "ws";
 import { room1Switch } from "../Controllers/room1Controller.js";
-import room2Switch  from "../Controllers/room2Controller.js";
+import room2Switch from "../Controllers/room2Controller.js";
+import room3Switch from "../Controllers/room3Controller.js";
+import room4Switch from "../Controllers/room4Controller.js";
 
 dotenv.config();
 
@@ -25,6 +27,12 @@ export function startWebSocketServer(server) {
           break;
         case 2:
           savedData = await room2Switch(receivedData);
+          break;
+        case 3:
+          savedData = await room3Switch(receivedData);
+          break;
+        case 4:
+          savedData = await room4Switch(receivedData);
           break;
         default:
           console.log("Invalid WS_SWITCH value, ignoring message.");
