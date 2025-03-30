@@ -1,6 +1,7 @@
 
 import { handleLogin } from "../Controllers/loginController.js";
 import { handlefetch } from "../Controllers/handleFetch.js";
+import handleTeacherFetch from "../Controllers/handleTeacherFetch.js";
 
 export function handleWebSocketMessage(ws, message) {
   try {
@@ -10,13 +11,19 @@ export function handleWebSocketMessage(ws, message) {
       case "login":
         handleLogin(ws, data);
         break;
-      // case "logout":
-      //   handleLogout(ws);
-      //   break;
 
       case "fetch_students":
         handlefetch(ws,data);
         break;
+
+      case "fetch_banned":
+        teacherlogin(ws,data);
+        break;
+
+      case "fetch_teacher":
+        handleTeacherFetch(ws, data);
+        break;
+
       default:
         ws.send(
           JSON.stringify({ type: "error", message: "Invalid request type" })

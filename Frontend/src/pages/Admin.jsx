@@ -28,14 +28,12 @@ export default function AdminPage() {
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3002");
+    const token = localStorage.getItem("token");
 
     ws.onopen = () => {
       console.log("WebSocket connection established");
-      ws.send(
-        JSON.stringify({
-          type: "fetch_students",
-        })
-      );
+      ws.send(JSON.stringify({ type: "fetch_students", token }));
+      ws.send(JSON.stringify({ type: "fetch_teacher", token })); 
     };
 
     ws.onmessage = (event) => {
@@ -43,14 +41,23 @@ export default function AdminPage() {
 
       if (response.type === "students_data") {
         const formattedStudents = response.data.map((student) => ({
-          name: `${student.first_name} ${student.middle_name || ""} ${student.last_name
-            }`.trim(),
+          name: `${student.first_name} ${student.middle_name || ""} ${
+            student.last_name
+          }`.trim(),
           studentNumber: student.studentNumber,
           status: true,
         }));
 
         setStudents(formattedStudents);
         setIsLoading(false);
+      } else if (response.type === "teacher_data") {
+        setProfessor([
+          {
+            img: response.data.img,
+            name: response.data.name,
+            course: response.data.course,
+          },
+        ]);
       } else if (response.type === "error") {
         setError(response.message);
         setIsLoading(false);
@@ -82,8 +89,12 @@ export default function AdminPage() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Database Management Systems");
-  const options = ["Database Management Systems", "Web Development", "Algorithms", "Computer Networks"];
-
+  const options = [
+    "Database Management Systems",
+    "Web Development",
+    "Algorithms",
+    "Computer Networks",
+  ];
 
   return (
     <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
@@ -128,7 +139,11 @@ export default function AdminPage() {
                 onClick={() => setIsOpen(!isOpen)}
               >
                 {selected}
-                <FaChevronDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                <FaChevronDown
+                  className={`transition-transform ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {isOpen && (
@@ -157,8 +172,6 @@ export default function AdminPage() {
                 icon={faCaretDown}
               />
             </div> */}
-
-
 
             <h1 className="flex w-8/9 justify-start items-center font-semibold">
               Schedule:

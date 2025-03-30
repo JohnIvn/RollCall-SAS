@@ -61,12 +61,12 @@ async function initializeApp() {
     await createTabletTeacherUnhashedccounts();
     await createTableStudentsSubjectsTable();
     await createTableDayTable();
-    await createTableAttendanceTable();
-    await createTableBannedTable();
     await createTableRoom1Table();
     await createTableRoom2Table();
     await createTableRoom3Table();
     await createTableRoom4Table();
+    await createTableAttendanceTable();
+    await createTableBannedTable();
 
     console.log("Tables have been created or checked.");
 

@@ -2,6 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import db from "../database.js";
 import Subject from "../Models/subjectsModel.js";
 import Day from "../Models/dayModel.js";
+import { teacherAccount } from "./teacherAccountModel.js";
 
 class Room1Model extends Model {}
 
@@ -18,6 +19,15 @@ const Room1 = Room1Model.init(
         model: Subject,
         key: "subject_code",
       },
+    },
+    teacher: {
+      type: DataTypes.STRING,
+      references: {
+        model: teacherAccount,
+        key: "teacherNumber",
+      },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     },
     Day: {
       type: DataTypes.STRING,
