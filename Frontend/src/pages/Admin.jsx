@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaChevronDown } from "react-icons/fa";
 import {
@@ -7,24 +8,16 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import UccLogo from "/ucc.png";
-import { useState, useEffect } from "react";
 
 export default function AdminPage() {
   const [professor, setProfessor] = useState([
     { img: null, name: "Jan Ivan Montenegro", course: "Database Management" },
   ]);
-
   const [students, setStudents] = useState([]);
+  const [schedule, setSchedule] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [schedule, setSchedules] = useState([
-    { day: "Mon", time: "10:00AM to 12:00PM", status: true },
-    { day: "Tue", time: "1:00PM to 3:00PM", status: true },
-    { day: "Wed", time: "8:00AM to 10:00AM", status: true },
-    { day: "Fri", time: "11:00AM to 5:00PM", status: false },
-  ]);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3002");
@@ -33,7 +26,8 @@ export default function AdminPage() {
     ws.onopen = () => {
       console.log("WebSocket connection established");
       ws.send(JSON.stringify({ type: "fetch_students", token }));
-      ws.send(JSON.stringify({ type: "fetch_teacher", token })); 
+      ws.send(JSON.stringify({ type: "fetch_teacher", token }));
+      ws.send(JSON.stringify({ type: "fetch_schedule", token }));
     };
 
     ws.onmessage = (event) => {
@@ -47,7 +41,6 @@ export default function AdminPage() {
           studentNumber: student.studentNumber,
           status: true,
         }));
-
         setStudents(formattedStudents);
         setIsLoading(false);
       } else if (response.type === "teacher_data") {
@@ -58,6 +51,8 @@ export default function AdminPage() {
             course: response.data.course,
           },
         ]);
+      } else if (response.type === "schedule") {
+        setSchedule(response.schedule);
       } else if (response.type === "error") {
         setError(response.message);
         setIsLoading(false);
@@ -87,97 +82,40 @@ export default function AdminPage() {
       student.studentNumber.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("Database Management Systems");
-  const options = [
-    "Database Management Systems",
-    "Web Development",
-    "Algorithms",
-    "Computer Networks",
-  ];
-
   return (
     <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
       <div
         className="flex justify-between items-center w-full gap-10 p-2"
         style={{ minHeight: "100%", height: "auto" }}
       >
+        {/* Professor Card */}
         <div className="flex flex-col w-2/5 h-full bg-white rounded-2xl">
           <div className="flex justify-center items-center w-auto h-1/4 m-4">
             <div className="flex rounded-full h-26 w-26 border-2 border-emerald-800 overflow-hidden">
               <img
-                src={
-                  professor.length > 0 && professor[0].img
-                    ? professor[0].img
-                    : UccLogo
-                }
+                src={professor[0]?.img || UccLogo}
                 alt="Professor"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="flex flex-col items-center px-2 justify-center h-full w-2/3">
               <h1 className="w-full text-start text-md font-semibold">
-                {professor.length > 0
-                  ? professor[0].name
-                  : "Jan Ivan Montenegro"}
+                {professor[0]?.name || "Jan Ivan Montenegro"}
               </h1>
               <p className="text-sm w-full text-start">
-                {professor.length > 0
-                  ? professor[0].course
-                  : "Database Management"}
+                {professor[0]?.course || "Database Management"}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col h-full w-full justify-start items-center">
-            <h1 className="flex w-8/9 justify-start items-center font-semibold">
-              Registered Subject:
-            </h1>
-            <div className="flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2 relative cursor-pointer hover:bg-blue-400 transition-all duration-300">
-              <button
-                className="flex justify-between gap-10 px-4 items-center w-full h-full text-white rounded-lg cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                {selected}
-                <FaChevronDown
-                  className={`transition-transform ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {isOpen && (
-                <ul className="absolute w-full mt-1 bg-white shadow-md rounded-md overflow-hidden top-15 border">
-                  {options.map((option) => (
-                    <li
-                      key={option}
-                      className="px-4 py-2 text-black cursor-pointer hover:bg-gray-400 transition-all duration-200"
-                      onClick={() => {
-                        setSelected(option);
-                        setIsOpen(false);
-                      }}
-                    >
-                      {option}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            {/* <div className="flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2">
-              <h1 className="flex justify-start items-center text-xl mx-2 text-white">
-                Database Management Systems
-              </h1>
-              <FontAwesomeIcon
-                className="flex w-10 text-white"
-                icon={faCaretDown}
-              />
-            </div> */}
-
-            <h1 className="flex w-8/9 justify-start items-center font-semibold">
-              Schedule:
-            </h1>
-
-            {schedule.map((item, index) => (
+          {/* Schedule Section */}
+          <h1 className="flex w-8/9 justify-start items-center font-semibold">
+            Schedule:
+          </h1>
+          {schedule.length === 0 ? (
+            <p className="text-center text-gray-500">No schedule available</p>
+          ) : (
+            schedule.map((item, index) => (
               <div
                 className="flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2"
                 key={index}
@@ -186,15 +124,18 @@ export default function AdminPage() {
                   className="flex w-16 text-2xl text-black"
                   icon={item.status ? faCheckCircle : faCircle}
                 />
-                <h1 className="flex justify-start items-center w-full text-md mx-2 text-black">
-                  {item.day} - {item.time}
-                </h1>
+                <div className="flex flex-col w-full">
+                  <h1 className="text-md mx-2 text-black">
+                    {item.day} - {item.time}
+                  </h1>
+                  <p className="text-sm mx-2 text-black">{item.subject}</p>
+                </div>
               </div>
-            ))}
-          </div>
+            ))
+          )}
         </div>
 
-        {/* Students List Section */}
+        {/* Students List */}
         <div className="flex flex-col justify-start items-center w-3/5 h-full gap-8 rounded-2xl overflow-hidden">
           <div className="flex items-center justify-center w-full h-1/5 p-4 bg-blue-950 rounded-2xl">
             <div className="flex flex-col justify-center items-start w-3/5 h-full">
