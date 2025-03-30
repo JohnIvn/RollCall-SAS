@@ -3,9 +3,9 @@ import dotenv, { config } from "dotenv";
 import db from "../database.js";
 import Subject from "./subjectsModel.js";
 import { studentAccount } from "./studentAccountModel.js";
-import Day from"./dayModel.js";
+import Day from "./dayModel.js";
 
-dotenv.config()
+dotenv.config();
 
 class AttendanceModel extends Model {}
 
@@ -46,6 +46,9 @@ const Attendance = AttendanceModel.init(
         model: Subject,
         key: "subject_code",
       },
+    },
+    teacher: {
+      type: DataTypes.STRING,
     },
     room: {
       type: DataTypes.STRING,

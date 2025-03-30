@@ -51,4 +51,10 @@ const Room1 = Room1Model.init(
   }
 );
 
+Room1Model.belongsTo(teacherAccount, {
+  foreignKey: "teacher", 
+  as: "teacherInfo",
+  targetKey: "teacherNumber", 
+});
+
 export default Room1;

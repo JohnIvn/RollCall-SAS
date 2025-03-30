@@ -6,6 +6,7 @@ import {
   faCheckCircle,
   faCircle,
   faSearch,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import UccLogo from "/ucc.png";
 
@@ -18,6 +19,9 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [attendanceData, setAttendanceData] = useState(null);
+  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3002");
@@ -40,6 +44,7 @@ export default function AdminPage() {
           }`.trim(),
           studentNumber: student.studentNumber,
           status: true,
+          cardNumber: student.cardNumber, // Add cardNumber for attendance matching
         }));
         setStudents(formattedStudents);
         setIsLoading(false);
@@ -53,6 +58,9 @@ export default function AdminPage() {
         ]);
       } else if (response.type === "schedule") {
         setSchedule(response.schedule);
+      } else if (response.type === "subjectAttendance") {
+        setAttendanceData(response.data);
+        setShowAttendanceModal(true);
       } else if (response.type === "error") {
         setError(response.message);
         setIsLoading(false);
@@ -76,14 +84,90 @@ export default function AdminPage() {
     };
   }, []);
 
+  const handleSubjectClick = (subjectItem) => {
+    const ws = new WebSocket("ws://localhost:3002");
+    const token = localStorage.getItem("token");
+
+    ws.onopen = () => {
+      ws.send(
+        JSON.stringify({
+          type: "fetchSubjectAttendance",
+          subject: subjectItem.subject,
+          token,
+        })
+      );
+    };
+
+    setSelectedSubject(subjectItem);
+  };
+
   const filteredStudents = students.filter(
     (student) =>
       student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.studentNumber.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Match attendance with students
+  const getAttendanceStatus = (student) => {
+    if (!attendanceData || !selectedSubject) return false;
+
+    return attendanceData.attendance.some(
+      (record) =>
+        record.cardNumber === student.cardNumber &&
+        record.day === selectedSubject.day
+    );
+  };
+
   return (
     <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
+      {/* Attendance Modal */}
+      {showAttendanceModal && attendanceData && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg w-1/2 max-h-screen overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">
+                Attendance for {selectedSubject?.subject} -{" "}
+                {selectedSubject?.day}
+              </h2>
+              <button
+                onClick={() => setShowAttendanceModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <h3 className="font-semibold">Schedule:</h3>
+              <p>
+                {attendanceData.schedule[0]?.time} - Room:{" "}
+                {attendanceData.schedule[0]?.room}
+              </p>
+            </div>
+
+            <div className="mb-4">
+              <h3 className="font-semibold">
+                Attendance Records ({attendanceData.attendance.length}):
+              </h3>
+              <ul className="divide-y divide-gray-200">
+                {attendanceData.attendance.map((record, index) => (
+                  <li key={index} className="py-2">
+                    <div className="flex justify-between">
+                      <span>
+                        {record.studentName} ({record.cardNumber})
+                      </span>
+                      <span className="text-green-500">
+                        {record.timeIn} <FontAwesomeIcon icon={faCheckCircle} />
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div
         className="flex justify-between items-center w-full gap-10 p-2"
         style={{ minHeight: "100%", height: "auto" }}
@@ -117,8 +201,9 @@ export default function AdminPage() {
           ) : (
             schedule.map((item, index) => (
               <div
-                className="flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2"
+                className="flex justify-between items-center bg-blue-300 mx-4 w-9/10 h-14 rounded-2xl m-2 cursor-pointer hover:bg-blue-400"
                 key={index}
+                onClick={() => handleSubjectClick(item)}
               >
                 <FontAwesomeIcon
                   className="flex w-16 text-2xl text-black"
@@ -197,9 +282,15 @@ export default function AdminPage() {
                     </h1>
                     <h1 className="w-1/6 text-center text-black">
                       <FontAwesomeIcon
-                        icon={student.status ? faCheckCircle : faCircle}
+                        icon={
+                          getAttendanceStatus(student)
+                            ? faCheckCircle
+                            : faCircle
+                        }
                         className={
-                          student.status ? "text-green-500" : "text-gray-300"
+                          getAttendanceStatus(student)
+                            ? "text-green-500"
+                            : "text-gray-300"
                         }
                       />
                     </h1>

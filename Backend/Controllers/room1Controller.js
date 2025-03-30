@@ -5,6 +5,7 @@ import Banned from "../Models/bannedModel.js";
 import { studentAccount } from "../Models/studentAccountModel.js";
 import Room1 from "../Models/room1Model.js";
 import { logToday } from "../Services/dayToday.js";
+import { teacherAccount } from "../Models/teacherAccountModel.js";
 
 let lastScannedCard = null;
 
@@ -56,28 +57,47 @@ export const room1Switch = async (data) => {
         Time_In: { [Op.lte]: currentTime },
         Time_Out: { [Op.gte]: currentTime },
       },
+      include: [
+        {
+          model: teacherAccount,
+          as: "teacherInfo",
+          attributes: ["teacherNumber"],
+        },
+      ],
     });
 
-    let subject = roomEntry ? roomEntry.Subjects : null;
+    let subject = roomEntry?.Subjects || null;
+    let teacherNumber = roomEntry?.teacherInfo?.teacherNumber || null;
+    let room = "Room1";
 
     console.log(
-      `Current time: ${currentTime}, Assigned subject: ${subject || "None"}`
+      `Current time: ${currentTime}, Assigned subject: ${
+        subject || "None"
+      }, Teacher: ${teacherNumber || "None"}`
     );
 
-    const newTest = await Test.create({
+    const newAttendance = await Test.create({
       Attendance_hex: cleanedData,
-      userId: userId, 
+      userId: userId,
       Day: currentDay,
       timein: currentTime,
       subject: subject,
+      teacher: teacherNumber, 
+      room: room,
     });
 
-    console.log(
-      `Data logged for ${cleanedData} (User ID: ${userId}):`,
-      newTest
-    );
-    return newTest;
+    console.log(`Attendance logged successfully:`, {
+      id: newAttendance.Attendance_id,
+      student: `${first_name} ${last_name}`,
+      subject: subject,
+      teacher: teacherNumber,
+      time: currentTime,
+      room: room,
+    });
+
+    return newAttendance;
   } catch (error) {
-    console.error("Error saving test data:", error);
+    console.error("Error in room1Switch:", error);
+    throw error; 
   }
 };

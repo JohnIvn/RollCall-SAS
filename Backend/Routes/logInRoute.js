@@ -3,6 +3,7 @@ import { handleLogin } from "../Controllers/loginController.js";
 import { handlefetch } from "../Controllers/handleFetch.js";
 import handleTeacherFetch from "../Controllers/handleTeacherFetch.js";
 import handlefetchSchedule from "../Controllers/handleScheduleFetch.js";
+import handleAttendanceFetch from "../Controllers/handleAttendanceFetch.js";
 
 export function handleWebSocketMessage(ws, message) {
   try {
@@ -27,6 +28,10 @@ export function handleWebSocketMessage(ws, message) {
 
       case "fetch_schedule":
         handlefetchSchedule(ws,data);
+        break;
+
+      case "fetch_attendance":
+        handleAttendanceFetch(ws, data);
         break;
 
       default:
