@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaChevronDown } from "react-icons/fa";
 import {
-  faCaretDown,
   faCheckCircle,
   faCircle,
   faSearch,
-  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import UccLogo from "/ucc.png";
 
@@ -20,8 +17,6 @@ export default function AdminPage() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [attendanceData, setAttendanceData] = useState(null);
-  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3002");
@@ -43,8 +38,8 @@ export default function AdminPage() {
             student.last_name
           }`.trim(),
           studentNumber: student.studentNumber,
-          status: true,
-          cardNumber: student.cardNumber, // Add cardNumber for attendance matching
+          cardNumber: student.cardNumber,
+          attendance: null,
         }));
         setStudents(formattedStudents);
         setIsLoading(false);
@@ -58,9 +53,6 @@ export default function AdminPage() {
         ]);
       } else if (response.type === "schedule") {
         setSchedule(response.schedule);
-      } else if (response.type === "subjectAttendance") {
-        setAttendanceData(response.data);
-        setShowAttendanceModal(true);
       } else if (response.type === "error") {
         setError(response.message);
         setIsLoading(false);
@@ -91,11 +83,26 @@ export default function AdminPage() {
     ws.onopen = () => {
       ws.send(
         JSON.stringify({
-          type: "fetchSubjectAttendance",
+          type: "fetch_attendance",
           subject: subjectItem.subject,
           token,
         })
       );
+    };
+
+    ws.onmessage = (event) => {
+      const response = JSON.parse(event.data);
+      if (response.type === "subjectAttendance") {
+        setStudents((prevStudents) =>
+          prevStudents.map((student) => ({
+            ...student,
+            attendance: response.data.attendance.some(
+              (record) => record.cardNumber === student.cardNumber
+            ),
+          }))
+        );
+      }
+      ws.close();
     };
 
     setSelectedSubject(subjectItem);
@@ -107,67 +114,8 @@ export default function AdminPage() {
       student.studentNumber.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Match attendance with students
-  const getAttendanceStatus = (student) => {
-    if (!attendanceData || !selectedSubject) return false;
-
-    return attendanceData.attendance.some(
-      (record) =>
-        record.cardNumber === student.cardNumber &&
-        record.day === selectedSubject.day
-    );
-  };
-
   return (
     <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
-      {/* Attendance Modal */}
-      {showAttendanceModal && attendanceData && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg w-1/2 max-h-screen overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">
-                Attendance for {selectedSubject?.subject} -{" "}
-                {selectedSubject?.day}
-              </h2>
-              <button
-                onClick={() => setShowAttendanceModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="font-semibold">Schedule:</h3>
-              <p>
-                {attendanceData.schedule[0]?.time} - Room:{" "}
-                {attendanceData.schedule[0]?.room}
-              </p>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="font-semibold">
-                Attendance Records ({attendanceData.attendance.length}):
-              </h3>
-              <ul className="divide-y divide-gray-200">
-                {attendanceData.attendance.map((record, index) => (
-                  <li key={index} className="py-2">
-                    <div className="flex justify-between">
-                      <span>
-                        {record.studentName} ({record.cardNumber})
-                      </span>
-                      <span className="text-green-500">
-                        {record.timeIn} <FontAwesomeIcon icon={faCheckCircle} />
-                      </span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
-
       <div
         className="flex justify-between items-center w-full gap-10 p-2"
         style={{ minHeight: "100%", height: "auto" }}
@@ -193,7 +141,7 @@ export default function AdminPage() {
           </div>
 
           {/* Schedule Section */}
-          <h1 className="flex w-8/9 justify-start items-center font-semibold">
+          <h1 className="flex w-8/9 justify-start ml-4 items-center font-semibold">
             Schedule:
           </h1>
           {schedule.length === 0 ? (
@@ -225,10 +173,12 @@ export default function AdminPage() {
           <div className="flex items-center justify-center w-full h-1/5 p-4 bg-blue-950 rounded-2xl">
             <div className="flex flex-col justify-center items-start w-3/5 h-full">
               <h1 className="flex w-full h-auto text-white text-xl">
-                Enrolled Students
+                Attendance
               </h1>
-              <p className="flex w-full h-auto text-white text-xl">
-                Bachelors In Information and Technology
+              <p className="flex w-full h-auto text-white text-sm">
+                {selectedSubject
+                  ? `${selectedSubject.subject} - ${selectedSubject.day} (${selectedSubject.time})`
+                  : "No schedule selected"}
               </p>
             </div>
             <div className="flex justify-center items-center w-2/5 h-full relative">
@@ -280,19 +230,19 @@ export default function AdminPage() {
                     <h1 className="w-1/2 text-center text-black truncate px-2">
                       {student.name}
                     </h1>
-                    <h1 className="w-1/6 text-center text-black">
-                      <FontAwesomeIcon
-                        icon={
-                          getAttendanceStatus(student)
-                            ? faCheckCircle
-                            : faCircle
-                        }
-                        className={
-                          getAttendanceStatus(student)
-                            ? "text-green-500"
-                            : "text-gray-300"
-                        }
-                      />
+                    <h1 className="w-1/6 text-center text-black text-sm">
+                      {student.attendance === null ? (
+                        "Click a subject"
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={student.attendance ? faCheckCircle : faCircle}
+                          className={
+                            student.attendance
+                              ? "text-green-500"
+                              : "text-gray-300"
+                          }
+                        />
+                      )}
                     </h1>
                   </div>
                 ))

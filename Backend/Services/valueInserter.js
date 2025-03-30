@@ -178,8 +178,9 @@ export const insertRoom1IfNotExist = async () => {
           Room1_id: 2,
           Subjects: "CCS 106",
           Day: "Tuesday",
-          Time_In: "21:05",
-          Time_Out: "22:00",
+          teacher: "1",
+          Time_In: "13:00",
+          Time_Out: "21:01",
         },
         {
           Room1_id: 3,

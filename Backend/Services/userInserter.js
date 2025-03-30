@@ -76,7 +76,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 1,
           studentNumber: "20236969-N",
-          cardNumber: "b5b9b5",
+          cardNumber: "7c65b42",
           first_name: "Matthew",
           middle_name: "Gabo",
           last_name: "Crocodillo",
