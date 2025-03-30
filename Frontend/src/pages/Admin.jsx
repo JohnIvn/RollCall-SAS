@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaChevronDown } from "react-icons/fa";
 import {
   faCaretDown,
   faCheckCircle,
@@ -26,7 +27,7 @@ export default function AdminPage() {
   ]);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3002"); 
+    const ws = new WebSocket("ws://localhost:3002");
 
     ws.onopen = () => {
       console.log("WebSocket connection established");
@@ -42,11 +43,10 @@ export default function AdminPage() {
 
       if (response.type === "students_data") {
         const formattedStudents = response.data.map((student) => ({
-          name: `${student.first_name} ${student.middle_name || ""} ${
-            student.last_name
-          }`.trim(),
+          name: `${student.first_name} ${student.middle_name || ""} ${student.last_name
+            }`.trim(),
           studentNumber: student.studentNumber,
-          status: true, 
+          status: true,
         }));
 
         setStudents(formattedStudents);
@@ -79,6 +79,11 @@ export default function AdminPage() {
       student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.studentNumber.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState("Database Management Systems");
+  const options = ["Database Management Systems", "Web Development", "Algorithms", "Computer Networks"];
+
 
   return (
     <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
@@ -117,8 +122,33 @@ export default function AdminPage() {
             <h1 className="flex w-8/9 justify-start items-center font-semibold">
               Registered Subject:
             </h1>
+            <div className="flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2 relative cursor-pointer hover:bg-blue-400 transition-all duration-300">
+              <button
+                className="flex justify-between gap-10 px-4 items-center w-full h-full text-white rounded-lg cursor-pointer"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                {selected}
+                <FaChevronDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
+              </button>
 
-            <div className="flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2">
+              {isOpen && (
+                <ul className="absolute w-full mt-1 bg-white shadow-md rounded-md overflow-hidden top-15 border">
+                  {options.map((option) => (
+                    <li
+                      key={option}
+                      className="px-4 py-2 text-black cursor-pointer hover:bg-gray-400 transition-all duration-200"
+                      onClick={() => {
+                        setSelected(option);
+                        setIsOpen(false);
+                      }}
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            {/* <div className="flex justify-between items-center bg-blue-950 mx-4 w-9/10 h-16 rounded-2xl m-2">
               <h1 className="flex justify-start items-center text-xl mx-2 text-white">
                 Database Management Systems
               </h1>
@@ -126,7 +156,9 @@ export default function AdminPage() {
                 className="flex w-10 text-white"
                 icon={faCaretDown}
               />
-            </div>
+            </div> */}
+
+
 
             <h1 className="flex w-8/9 justify-start items-center font-semibold">
               Schedule:
@@ -150,8 +182,8 @@ export default function AdminPage() {
         </div>
 
         {/* Students List Section */}
-        <div className="flex flex-col justify-start items-center w-3/5 h-full rounded-2xl overflow-hidden">
-          <div className="flex items-center justify-center w-full h-1/5 p-4 bg-blue-950">
+        <div className="flex flex-col justify-start items-center w-3/5 h-full gap-8 rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-center w-full h-1/5 p-4 bg-blue-950 rounded-2xl">
             <div className="flex flex-col justify-center items-start w-3/5 h-full">
               <h1 className="flex w-full h-auto text-white text-xl">
                 Enrolled Students
@@ -162,7 +194,7 @@ export default function AdminPage() {
             </div>
             <div className="flex justify-center items-center w-2/5 h-full relative">
               <input
-                className="flex h-10 w-full rounded-xl border border-gray-600 text-black placeholder-gray-400 pl-8"
+                className="flex h-10 w-full rounded-xl border border-gray-600 text-white placeholder-gray-400 pl-8"
                 placeholder="Search..."
                 type="text"
                 value={searchTerm}
@@ -178,9 +210,8 @@ export default function AdminPage() {
           <div className="flex flex-col justify-start items-center w-full h-full overflow-hidden rounded-2xl">
             {/* Table Header */}
             <div className="flex justify-center items-center h-16 w-full bg-zinc-800">
-              <h1 className="w-6 text-center text-white">#</h1>
+              <h1 className="w-1/6 text-center text-white">Student No</h1>
               <h1 className="w-1/2 text-center text-white">Student Name</h1>
-              <h1 className="w-1/4 text-center text-white">Student No</h1>
               <h1 className="w-1/6 text-center text-white">Attendance</h1>
             </div>
 
@@ -204,12 +235,11 @@ export default function AdminPage() {
                     key={index}
                     className="flex justify-center items-center h-10 w-full even:bg-gray-100"
                   >
-                    <h1 className="w-6 text-center text-black">{index + 1}</h1>
+                    <h1 className="w-1/6 text-center text-black">
+                      {student.studentNumber}
+                    </h1>
                     <h1 className="w-1/2 text-center text-black truncate px-2">
                       {student.name}
-                    </h1>
-                    <h1 className="w-1/4 text-center text-black">
-                      {student.studentNumber}
                     </h1>
                     <h1 className="w-1/6 text-center text-black">
                       <FontAwesomeIcon

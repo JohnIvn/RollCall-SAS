@@ -80,8 +80,16 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
       className={`${CardStatus ? "flex" : "hidden"
         } flex-col justify-between items-center h-1/2 w-1/3 bg-white rounded-3xl fixed animate-move-down`}
     >
-      <h1 className="flex justify-start items-center text-center px-6 w-full h-12 text-[#2D2D2D] text-2xl border-b-gray-400 border-b-1">
+      <h1 className="flex justify-start items-center text-center px-6 w-full h-24 text-[#2D2D2D] text-3xl border-b-gray-400 border-b-1 lg:border-b-2 relative">
         {Label}
+        
+        {error &&
+          <p
+            className="flex w-1/2 text-lg h-full p-4 justify-center items-center text-start text-red-600 absolute right-0"
+          >
+            {error}
+          </p>
+        }
       </h1>
       <div className="flex flex-col justify-start items-center h-2/3 w-full">
         {Type === "Student" && (
@@ -98,12 +106,12 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
 
         {Type === "Admin" && (
           <form
-            className="flex flex-col justify-start items-center w-full h-full"
+            className="flex flex-col justify-center items-center w-full h-full"
             action={(e) => {
               e.preventDefault();
             }}
           >
-            <h1 className="flex w-3/4 m-2">
+            <h1 className="flex w-3/4 m-2 text-xl">
               Welcome Teacher! Please input your proper credentials to confirm
               your login
             </h1>
@@ -142,23 +150,16 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
                 </button>
               </div>
             </div>
-            {error &&
-            <h1
-              className="flex w-8/9 justify-center items-center text-start text-red-600 my-4"
-            >
-              {error}
-            </h1>
-
-            }
           </form>
         )}
       </div>
-      <div className="flex justify-end items-center h-16 w-full px-4 border-t-1 border-t-gray-400 gap-2 ">
+      <div className="flex justify-end items-center h-24 w-full px-4 border-t-1 border-t-gray-400 gap-2 ">
         <button
-          className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-16 rounded-md bg-[#2D2D2D] outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
+          className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-16 lg:w-24 lg:h-12 rounded-md bg-[#2D2D2D] outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
           onClick={() => {
             setFormValues({ email: "", password: "" });
             setShowPassword(false);
+            setErrors(null)
             OnClose();
           }}
         >
@@ -166,7 +167,7 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
         </button>
         {Type === "Admin" && (
           <button
-            className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-32 rounded-md bg-blue-400 outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
+            className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-32 lg:w-48 lg:h-12 rounded-md bg-blue-400 outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
             onClick={handleLogin}
           >
             Proceed

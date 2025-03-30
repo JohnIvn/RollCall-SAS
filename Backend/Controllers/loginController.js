@@ -14,7 +14,7 @@ export async function handleLogin(ws, data) {
 
     if (!teacher) {
       return ws.send(
-        JSON.stringify({ type: "error", message: "Invalid email or password" })
+        JSON.stringify({ type: "error", message: "Email Not Found" })
       );
     }
 
