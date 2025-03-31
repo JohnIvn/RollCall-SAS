@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -17,19 +17,21 @@ export default function AdminPage() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState(null);
+  const wsRef = useRef(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3002");
     const token = localStorage.getItem("token");
+    wsRef.current = new WebSocket("ws://localhost:3002");
 
-    ws.onopen = () => {
+    wsRef.current.onopen = () => {
       console.log("WebSocket connection established");
-      ws.send(JSON.stringify({ type: "fetch_students", token }));
-      ws.send(JSON.stringify({ type: "fetch_teacher", token }));
-      ws.send(JSON.stringify({ type: "fetch_schedule", token }));
+      wsRef.current.send(JSON.stringify({ type: "fetch_students", token }));
+      wsRef.current.send(JSON.stringify({ type: "fetch_teacher", token }));
+      wsRef.current.send(JSON.stringify({ type: "fetch_schedule", token }));
     };
 
-    ws.onmessage = (event) => {
+    wsRef.current.onmessage = (event) => {
       const response = JSON.parse(event.data);
 
       if (response.type === "students_data") {
@@ -53,46 +55,7 @@ export default function AdminPage() {
         ]);
       } else if (response.type === "schedule") {
         setSchedule(response.schedule);
-      } else if (response.type === "error") {
-        setError(response.message);
-        setIsLoading(false);
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      setError("Failed to connect to server");
-      setIsLoading(false);
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
-
-    return () => {
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.close();
-      }
-    };
-  }, []);
-
-  const handleSubjectClick = (subjectItem) => {
-    const ws = new WebSocket("ws://localhost:3002");
-    const token = localStorage.getItem("token");
-
-    ws.onopen = () => {
-      ws.send(
-        JSON.stringify({
-          type: "fetch_attendance",
-          subject: subjectItem.subject,
-          token,
-        })
-      );
-    };
-
-    ws.onmessage = (event) => {
-      const response = JSON.parse(event.data);
-      if (response.type === "subjectAttendance") {
+      } else if (response.type === "subjectAttendance") {
         setStudents((prevStudents) =>
           prevStudents.map((student) => ({
             ...student,
@@ -101,11 +64,57 @@ export default function AdminPage() {
             ),
           }))
         );
+      } else if (response.type === "error") {
+        setError(response.message);
+        setIsLoading(false);
       }
-      ws.close();
     };
 
+    wsRef.current.onerror = (error) => {
+      console.error("WebSocket error:", error);
+      setError("Failed to connect to server");
+      setIsLoading(false);
+    };
+
+    wsRef.current.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return () => {
+      if (wsRef.current?.readyState === WebSocket.OPEN) {
+        wsRef.current.close();
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
+  const handleSubjectClick = (subjectItem) => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
     setSelectedSubject(subjectItem);
+
+    fetchAttendance(subjectItem);
+
+    intervalRef.current = setInterval(() => {
+      fetchAttendance(subjectItem);
+    }, 1000);
+  };
+
+  const fetchAttendance = (subjectItem) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      const token = localStorage.getItem("token");
+      wsRef.current.send(
+        JSON.stringify({
+          type: "fetch_attendance",
+          subject: subjectItem.subject,
+          token,
+        })
+      );
+    }
   };
 
   const filteredStudents = students.filter(
