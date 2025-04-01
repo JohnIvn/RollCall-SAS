@@ -13,7 +13,69 @@ import Card2 from "../components/Card2";
 export default function CapturePage() {
   const [showCard, setShowCard] = useState(false);
   const [index, setIndex] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [error, setErrors] = useState(null);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  const togglePassword = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
+
+  const handleLogin = () => {
+    setErrors(null)
+    const ws = new WebSocket("ws://localhost:3002");
+
+    ws.onopen = () => {
+      ws.send(
+        JSON.stringify({
+          type: "login",
+          email: formValues.email,
+          password: formValues.password,
+        })
+      );
+    };
+
+    ws.onmessage = (event) => {
+      const response = JSON.parse(event.data);
+
+      if (response.type === "success") {
+        localStorage.setItem("token", response.token);
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Logging in",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          willClose: () => {
+            navigate("/admin/dashboard");
+          }
+        });
+      } else {
+        setErrors(response.message)
+        setTimeout(() => setErrors(null), 2000)
+      }
+    };
+
+    ws.onerror = (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Server Error",
+        text: "Sorry for the inconvenience! :D",
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    };
+  };
   const openCard = (index) => {
     setIndex(index);
     setShowCard(true);
@@ -23,41 +85,69 @@ export default function CapturePage() {
   };
 
   return (
-    <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
+    <section className="flex flex-col justify-center items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
       <div
-        className="flex flex-col justify-center items-center w-full pt-24"
+        className="flex flex-col justify-center items-center w-full"
         style={{ minHeight: "75%", height: "auto" }}
       >
-        {index == 2 ? (
-          <Card2
-            Toggle={openCard}
-            CardStatus={showCard}
-            Label={"Admin Login"}
-            OnClose={closeCard}
-            Type={"Admin"}
-          />
-        ) : (
-          <Card2
-            Toggle={openCard}
-            CardStatus={showCard}
-            OnClose={closeCard}
-            Label={"Student Login"}
-            Type={"Student"}
-          />
-        )}
-        <h1 className="flex text-white text-4xl font-semibold">Welcome</h1>
-        <h2 className="flex justify-center items-center w-5/6 text-white">
-          Who's going to use this website?
-        </h2>
-
-        <div className="flex justify-center gap-8 w-3/4 h-1/3 my-6">
-          <button
-            className="flex justify-center items-center h-full w-1/3 bg-emerald-900 text-2xl gap-4 text-white font-semibold outline-none rounded-2xl hover:bg-emerald-950 transition-all duration-300 cursor-pointer"
-            onClick={() => openCard(2)}
+        <h1 className="flex text-white p-8 text-6xl font-semibold">
+          Welcome!
+        </h1>
+        <div
+          className='flex-col justify-between items-center h-1/2 py-32 lg:py-0 lg:h-full w-full lg:w-1/3 bg-white rounded-3xl'
+        >
+          <form
+            className="flex flex-col justify-center items-center w-full h-full"
+            action={(e) => {
+              e.preventDefault();
+            }}
           >
-            <FontAwesomeIcon icon={faUserLock} />
-            Admin
-          </button>
+            <h1 className="flex w-3/4 m-2 text-xl">
+              Scan your RFID as a Student, or Login as a Professor!
+            </h1>
+            <label className="flex w-2/3" htmlFor="email">
+              Email:
+            </label>
+            <div className="flex flex-col justify-center items-center w-2/3 mb-4">
+              <input
+                name="email"
+                id="email"
+                type="email"
+                className="flex w-full border rounded-md outline-none px-2"
+                value={formValues.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            <label className="flex w-2/3" htmlFor="password">
+              Password:
+            </label>
+            <div className="flex flex-col justify-center items-center w-full">
+              <div className="flex justify-center items-center w-2/3 relative">
+                <input
+                  name="password"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  className="flex w-full border rounded-md outline-none px-2"
+                  value={formValues.password}
+                  onChange={handleInputChange}
+                />
+                <button
+                  className="flex justify-center items-center h-6 w-6 outline-0 absolute right-0"
+                  type="button"
+                  onClick={togglePassword}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                </button>
+              </div>
+            </div>
+
+            <button
+              className="flex justify-center items-center text-center text-md text-white px-6 py-1 w-32 mt-8 lg:w-2/3 lg:h-12 rounded-md bg-blue-400 outline-0 hover:bg-[#1d1d1d] transition-all duration-300 cursor-pointer"
+              onClick={handleLogin}
+            >
+              Proceed
+            </button>
+          </form>
         </div>
       </div>
     </section>

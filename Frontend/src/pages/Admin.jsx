@@ -124,15 +124,15 @@ export default function AdminPage() {
   );
 
   return (
-    <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
+    <section className="flex flex-col justify-start items-center w-full h-screen overflow-x-hidden overflow-y-auto">
       <div
-        className="flex justify-between items-center w-full gap-10 p-2"
+        className="flex lg:flex-row flex-col justify-between items-center w-4/5 gap-10 p-2 pt-12"
         style={{ minHeight: "100%", height: "auto" }}
       >
         {/* Professor Card */}
-        <div className="flex flex-col w-2/5 h-full bg-white rounded-2xl">
+        <div className="flex flex-col w-2/5 h-full bg-white rounded-2xl p-4">
           <div className="flex flex-col justify-center items-center w-auto h-1/2">
-            <div className="flex rounded-full h-48 w-48 border-2 border-emerald-800 overflow-hidden">
+            <div className="flex rounded-full h-40 w-40 border-2 border-emerald-800 overflow-hidden">
               <img
                 src={professor[0]?.img || UccLogo}
                 alt="Professor"

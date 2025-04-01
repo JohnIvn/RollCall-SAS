@@ -3,7 +3,7 @@ export default function ContactsPage() {
 
 	return (
 		<section
-			className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto"
+			className="flex flex-col justify-center items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto"
 		>
 			<div
 				className="flex flex-col justify-center items-center w-full gap-6"
@@ -22,10 +22,10 @@ export default function ContactsPage() {
 				</h2>
 
 				<div
-					className="flex justify-center items-center w-full"
+					className="flex flex-col lg:flex-row justify-center items-center w-full"
 				>
 					<ul
-						className="text-wrap w-1/3 text-white"
+						className="text-wrap w-full lg:w-1/3 text-white"
 					
 					>
 						<li
@@ -34,7 +34,7 @@ export default function ContactsPage() {
 						<li>📧 Email: uccmain@gmail.com</li>
 					</ul>
 					<ul
-						className="text-wrap w-1/3 text-white"
+						className="text-wrap w-full lg:w-1/3 text-white"
 					
 					>
 						<li>🕒 Monday - Friday: 8:00 AM - 5:00 PM</li>
