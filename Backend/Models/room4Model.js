@@ -2,12 +2,13 @@ import { DataTypes, Model } from "sequelize";
 import db from "../database.js";
 import Subject from "../Models/subjectsModel.js";
 import Day from "../Models/dayModel.js";
+import { teacherAccount } from "./teacherAccountModel.js";
 
-class Room4Model extends Model {}
+class room4Model extends Model {}
 
-const Room4 = Room4Model.init(
+const room4 = room4Model.init(
   {
-    Room4_id: {
+    room4_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -18,6 +19,15 @@ const Room4 = Room4Model.init(
         model: Subject,
         key: "subject_code",
       },
+    },
+    teacher: {
+      type: DataTypes.STRING,
+      references: {
+        model: teacherAccount,
+        key: "teacherNumber",
+      },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     },
     Day: {
       type: DataTypes.STRING,
@@ -35,10 +45,16 @@ const Room4 = Room4Model.init(
   },
   {
     sequelize: db,
-    modelName: "Room4Model",
-    tableName: "Room4_Table",
+    modelName: "room4Model",
+    tableName: "room4_Table",
     timestamps: true,
   }
 );
 
-export default Room4;
+room4Model.belongsTo(teacherAccount, {
+  foreignKey: "teacher", 
+  as: "teacherInfo",
+  targetKey: "teacherNumber", 
+});
+
+export default room4;

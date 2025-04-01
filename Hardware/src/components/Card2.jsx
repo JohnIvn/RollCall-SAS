@@ -1,7 +1,48 @@
+import { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFingerprint, faIdCard } from "@fortawesome/free-solid-svg-icons";
 
 export default function Card1({ CardStatus, OnClose, Label }) {
+  const wsRef = useRef(null);
+
+  // Set up WebSocket connection when the component mounts
+  useEffect(() => {
+    wsRef.current = new WebSocket("ws://localhost:3002"); // Replace with your WebSocket URL
+
+    wsRef.current.onopen = () => {
+      console.log("WebSocket connected.");
+    };
+
+    wsRef.current.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    wsRef.current.onclose = () => {
+      console.warn("WebSocket closed.");
+    };
+
+    // Close the WebSocket connection when the component unmounts
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
+
+  // Set up the periodic fetch_scan call
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.send(JSON.stringify({ type: "fetch_scan" }));
+      } else {
+        console.warn("WebSocket not open. Unable to send message.");
+      }
+    }, 1000); // Send the fetch_scan every second
+
+    // Cleanup interval when the component unmounts
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
       className={`${

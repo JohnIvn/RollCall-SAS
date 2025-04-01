@@ -16,34 +16,83 @@ export const insertTeacherIfNotExist = async () => {
     const existingTeacher = await teacherAccount.findAll();
 
     if (existingTeacher.length === 0) {
-      const password = "testtest";
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      const teachers = [
+        {
+          teacherNumber: 1,
+          first_name: "Jan Ivan",
+          middle_name: "V.",
+          last_name: "Montenegro",
+          email: "teacher1@gmail.com",
+          phoneNumber: "09123456789",
+          password: "testtest1",
+        },
+        {
+          teacherNumber: 2,
+          first_name: "Maria",
+          middle_name: "C.",
+          last_name: "Santos",
+          email: "teacher2@gmail.com",
+          phoneNumber: "09234567890",
+          password: "testtest2",
+        },
+        {
+          teacherNumber: 3,
+          first_name: "Juan",
+          middle_name: "D.",
+          last_name: "Cruz",
+          email: "teacher3@gmail.com",
+          phoneNumber: "09345678901",
+          password: "testtest3",
+        },
+        {
+          teacherNumber: 4,
+          first_name: "Ana",
+          middle_name: "M.",
+          last_name: "Reyes",
+          email: "teacher4@gmail.com",
+          phoneNumber: "09456789012",
+          password: "testtest4",
+        },
+        {
+          teacherNumber: 5,
+          first_name: "Pedro",
+          middle_name: "E.",
+          last_name: "Gonzales",
+          email: "teacher5@gmail.com",
+          phoneNumber: "09567890123",
+          password: "testtest5",
+        },
+      ];
 
-      const teacherData = {
-        teacherNumber: 1,
-        first_name: "Testtest",
-        middle_name: "Testtest",
-        last_name: "Testtest",
-        email: "testtest@gmail.com",
-        phoneNumber: "099999999",
-        password: hashedPassword,
-      };
+      for (const teacher of teachers) {
+        const hashedPassword = await bcrypt.hash(teacher.password, saltRounds);
 
-      await teacherAccount.create(teacherData);
+        const teacherData = {
+          teacherNumber: teacher.teacherNumber,
+          first_name: teacher.first_name,
+          middle_name: teacher.middle_name,
+          last_name: teacher.last_name,
+          email: teacher.email,
+          phoneNumber: teacher.phoneNumber,
+          password: hashedPassword,
+        };
 
-      await teacherUnhashedAccount.create({
-        userId: teacherData.teacherNumber,
-        teacherNumber: teacherData.teacherNumber,
-        email: teacherData.email,
-        password: password,
-      });
+        await teacherAccount.create(teacherData);
 
-      console.log("Teacher inserted successfully in both tables.");
+        await teacherUnhashedAccount.create({
+          userId: teacher.teacherNumber,
+          teacherNumber: teacher.teacherNumber,
+          email: teacher.email,
+          password: teacher.password,
+        });
+      }
+
+      console.log("5 teachers inserted successfully in both tables.");
     } else {
-      console.log("Teacher already exists, skipping insertion.");
+      console.log("Teachers already exist, skipping insertion.");
     }
   } catch (error) {
-    console.error("Error inserting Teacher:", error);
+    console.error("Error inserting Teachers:", error);
   }
 };
 

@@ -38,7 +38,7 @@ export default async function handleAttendanceFetch(ws, data) {
     const attendanceRecords = await Attendance.findAll({
       where: { subject },
       attributes: ["Attendance_hex", "Day", "timein", "subject", "room"],
-      order: [["timein", "ASC"]], // Order by time ascending
+      order: [["timein", "ASC"]],
     });
 
     const responseData = {
