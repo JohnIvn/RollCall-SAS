@@ -1,6 +1,5 @@
 import temporary from "../Models/temporaryModel.js";
 
-// Cache object to store the last sent data
 let lastScanDataCache = null;
 
 export default async function handleScanFetch(ws, data) {
@@ -18,16 +17,15 @@ export default async function handleScanFetch(ws, data) {
         "subject",
         "teacher",
         "room",
+        "banned",
+        "not_exist",
       ],
       raw: true,
     });
 
-    // Convert the current data to a string for comparison
     const currentDataStr = JSON.stringify(scanData);
 
-    // Compare with the cached data
     if (lastScanDataCache !== currentDataStr) {
-      // Data has changed, send it and update cache
       ws.send(
         JSON.stringify({
           type: "scan_data",
@@ -37,8 +35,6 @@ export default async function handleScanFetch(ws, data) {
       );
       lastScanDataCache = currentDataStr;
     } else {
-      // Data hasn't changed, you can optionally send a different message
-      // or just do nothing
       ws.send(
         JSON.stringify({
           type: "scan_data_unchanged",
