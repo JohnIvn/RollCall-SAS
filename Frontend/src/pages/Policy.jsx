@@ -3,7 +3,7 @@ export default function PolicyPage() {
 
 	return (
 		<section
-			className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto"
+			className="flex flex-col justify-center items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto"
 		>
 			<div
 				className="flex flex-col justify-center items-center w-full gap-6"
@@ -11,21 +11,21 @@ export default function PolicyPage() {
 			>
 
 				<h1
-					className="flex text-white text-4xl font-semibold"
+					className="flex text-white text-2xl lg:text-4xl font-semibold"
 				>
 					Privacy Policy
 				</h1>
 				<h2
-					className="flex justify-center items-center w-5/6 text-white"
+					className="flex justify-center items-center w-full lg:w-5/6 text-white"
 				>
 					This Student Attendance System collects and processes student attendance data to improve record-keeping and monitoring.
 				</h2>
 
 				<div
-					className="flex justify-center items-center w-full"
+					className="flex flex-col lg:flex-row justify-center items-center w-full"
 				>
 					<ul
-						className="text-wrap w-2/5 text-white list-disc"
+						className="text-wrap w-full lg:w-2/5 text-white list-disc"
 
 					>
 						Information We Collect
@@ -34,7 +34,7 @@ export default function PolicyPage() {
 						<li>Device or RFID card data (if applicable)</li>
 					</ul>
 					<ul
-						className="text-wrap w-2/5 text-white list-disc"
+						className="text-wrap w-full lg:w-2/5 text-white list-disc"
 
 					>
 						How We Use Your Information
@@ -49,12 +49,12 @@ export default function PolicyPage() {
 					className="flex flex-col justify-center items-center w-full"
 				>
 					<h2
-						className="flex w-2/3 justify-start items-start text-white font-semibold"
+						className="flex w-full lg:w-2/3 justify-start items-start text-white font-semibold"
 					>
 						Data Security
 					</h2>
 					<p
-						className="flex w-2/3 justify-start items-start text-white"
+						className="flex w-full lg:w-2/3 justify-start items-start text-white"
 					>
 						We implement security measures to protect stored data from unauthorized access, loss, or misuse.
 					</p>
@@ -63,12 +63,12 @@ export default function PolicyPage() {
 					className="flex flex-col justify-center items-center w-full"
 				>
 					<h2
-						className="flex w-2/3 justify-start items-start text-white font-semibold"
+						className="flex w-full lg:w-2/3 justify-start items-start text-white font-semibold"
 					>
 						Sharing & Retention
 					</h2>
 					<p
-						className="flex w-2/3 justify-start items-start text-white"
+						className="flex w-full lg:w-2/3 justify-start items-start text-white"
 					>
 						Your data is only shared with authorized personnel and retained as required for academic and legal purposes.
 					</p>
@@ -77,12 +77,12 @@ export default function PolicyPage() {
 					className="flex flex-col justify-center items-center w-full"
 				>
 					<h2
-						className="flex w-2/3 justify-start items-start text-white font-semibold"
+						className="flex w-full lg:w-2/3 justify-start items-start text-white font-semibold"
 					>
 						Your Rights
 					</h2>
 					<p
-						className="flex w-2/3 justify-start items-start text-white"
+						className="flex w-full lg:w-2/3 justify-start items-start text-white"
 					>
 						You may request access, correction, or deletion of your data by contacting us through our page.
 					</p>
