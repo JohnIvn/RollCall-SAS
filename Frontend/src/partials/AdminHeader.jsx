@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 export default function AdminHeader() {
 	const navigate = useNavigate();
 	const handleLogout = () => {
+		localStorage.removeItem("student_id")
 		localStorage.removeItem("token")
 		Swal.fire({
 			icon: "success",

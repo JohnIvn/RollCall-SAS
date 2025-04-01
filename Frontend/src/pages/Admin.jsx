@@ -131,26 +131,26 @@ export default function AdminPage() {
       >
         {/* Professor Card */}
         <div className="flex flex-col w-2/5 h-full bg-white rounded-2xl">
-          <div className="flex justify-center items-center w-auto h-1/4 m-4">
-            <div className="flex rounded-full h-26 w-26 border-2 border-emerald-800 overflow-hidden">
+          <div className="flex flex-col justify-center items-center w-auto h-1/2">
+            <div className="flex rounded-full h-48 w-48 border-2 border-emerald-800 overflow-hidden">
               <img
                 src={professor[0]?.img || UccLogo}
                 alt="Professor"
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="flex flex-col items-center px-2 justify-center h-full w-2/3">
-              <h1 className="w-full text-start text-md font-semibold">
+            <div className="flex flex-col items-center px-2 justify-center p-8 w-2/3">
+              <h1 className="w-full text-start text-2xl font-semibold">
                 {professor[0]?.name || "Jan Ivan Montenegro"}
               </h1>
-              <p className="text-sm w-full text-start">
-                {professor[0]?.course || "Database Management"}
+              <p className="text-xl w-full text-start">
+                {professor[0]?.course || "Currently Undefined"}
               </p>
             </div>
           </div>
 
           {/* Schedule Section */}
-          <h1 className="flex w-8/9 justify-start ml-4 items-center font-semibold">
+          <h1 className="flex w-8/9 justify-start ml-4 items-center font-semibold ">
             Schedule:
           </h1>
           {schedule.length === 0 ? (

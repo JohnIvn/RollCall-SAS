@@ -95,10 +95,9 @@ export default function Card1({ CardStatus, OnClose, Label, Type }) {
         {Type === "Student" && (
           <div className="flex flex-col items-center w-full h-full p-4">
             <h1 className="flex font-semibold text-xl">
-              Put Your Fingerprint or Scan your RFID!
+              Scan your RFID!
             </h1>
             <div className="flex w-full h-full justify-around items-center text-8xl">
-              <FontAwesomeIcon icon={faFingerprint} />
               <FontAwesomeIcon icon={faIdCard} />
             </div>
           </div>

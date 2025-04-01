@@ -38,3 +38,48 @@ export async function handlefetch(ws, data) {
     );
   }
 }
+
+
+export async function handlefetchStudent(ws, data) {
+  try {
+    const students = await studentAccount.findOne({
+      attributes: [
+        "userId",
+        "studentNumber",
+        "cardNumber",
+        "first_name",
+        "middle_name",
+        "last_name",
+        "course",
+        "year",
+        "section",
+        "email",
+        "phoneNumber",
+      ],
+      order: [
+        ["last_name", "ASC"],
+        ["first_name", "ASC"],
+      ],
+      where:{
+        userId: data.data
+      }
+    });
+
+    ws.send(
+      JSON.stringify({
+        type: "student_data",
+        data: students,
+      })
+    );
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    ws.send(
+      JSON.stringify({
+        type: "error",
+        message: "Failed to fetch students data",
+      })
+    );
+  }
+}
+
+

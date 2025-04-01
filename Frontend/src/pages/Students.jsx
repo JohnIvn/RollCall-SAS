@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCheckCircle, faCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 import UccLogo from '/ucc.png'
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function StudentsPage() {
 	const [students, setStudents] = useState([]);
@@ -26,12 +27,12 @@ export default function StudentsPage() {
 
 			if (response.type === "students_data") {
 				const formattedStudents = response.data.map((student) => ({
+					userId: student.userId,
 					name: `${student.first_name} ${student.middle_name || ""} ${student.last_name
 						}`.trim(),
 					studentNumber: student.studentNumber,
 					status: true,
 				}));
-
 				setStudents(formattedStudents);
 				setIsLoading(false);
 			} else if (response.type === "error") {
@@ -56,6 +57,13 @@ export default function StudentsPage() {
 			}
 		};
 	}, []);
+
+	const navigate = useNavigate()
+	const navigateStudentProfile = (id) => {
+		localStorage.setItem("student_id", id);
+		console.log("ID: " + localStorage.getItem("student_id"))
+		navigate('/admin/students/profile')
+	}
 
 
 	const filteredStudents = students.filter(
@@ -134,25 +142,29 @@ export default function StudentsPage() {
 								</div>
 							) : (
 								filteredStudents.map((student, index) => (
-									<div
+									<button
+										className="flex justify-center items-center h-10 w-full outline-0 text-black hover:text-white hover:bg-gray-600 transition-all
+										duration-300 cursor-pointer"
 										key={index}
-										className="flex justify-center items-center h-10 w-full even:bg-gray-100"
+										onClick={() => navigateStudentProfile(student.userId)}
 									>
-										<h1 className="w-1/6 text-center text-black">
+										<h1 className="w-1/6 text-center">
 											{student.studentNumber}
 										</h1>
-										<h1 className="w-1/2 text-center text-black truncate px-2">
+										<h1 className="w-1/2 text-center truncate px-2">
 											{student.name}
 										</h1>
-										<h1 className="w-1/6 text-center text-black">
-											<FontAwesomeIcon
-												icon={student.status ? faCheckCircle : faCircle}
-												className={
-													student.status ? "text-green-500" : "text-gray-300"
-												}
-											/>
+										<h1 className="w-1/6 text-center">
+										<FontAwesomeIcon
+                          icon={student.attendance ? faCheckCircle : faCircle}
+                          className={`${
+                            student.attendance
+                              ? "text-green-500"
+                              : "text-gray-500"}`
+                          }
+                        />
 										</h1>
-									</div>
+									</button>
 								))
 							)}
 						</div>
