@@ -8,6 +8,7 @@ import {
   handlefetchSchedule4,
 } from "../Controllers/handleScheduleFetch.js";
 import handleAttendanceFetch from "../Controllers/handleAttendanceFetch.js";
+import handleScanFetch from "../Controllers/handleScanFetch.js";
 
 export function handleWebSocketMessage(ws, message) {
   try {
@@ -54,6 +55,10 @@ export function handleWebSocketMessage(ws, message) {
 
       case "fetch_student_by_id":
         handlefetchStudent(ws, data);
+        break;
+
+      case "fetch_scan":
+        handleScanFetch(ws, data);
         break;
 
       default:
