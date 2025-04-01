@@ -21,9 +21,9 @@ export const insertTeacherIfNotExist = async () => {
 
       const teacherData = {
         teacherNumber: 1,
-        first_name: "Testtest",
-        middle_name: "Testtest",
-        last_name: "Testtest",
+        first_name: "Jan Ivan",
+        middle_name: "V.",
+        last_name: "Montenegro",
         email: "testtest@gmail.com",
         phoneNumber: "099999999",
         password: hashedPassword,
