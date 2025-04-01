@@ -29,6 +29,15 @@ export const room1Switch = async (data) => {
 
     if (bannedEntry) {
       console.log(`Banned card detected: ${cleanedData}. Data not logged.`);
+
+      await Temporary.create({
+        first_name: "Banned",
+        temporary_hex: cleanedData,
+        banned: "yes",
+        Day: logToday(),
+        timein: dayjs().format("HH:mm"),
+      });
+
       return null;
     }
 
@@ -38,6 +47,15 @@ export const room1Switch = async (data) => {
 
     if (!student) {
       console.log("Card not registered to any student. Data not logged.");
+
+      await Temporary.create({
+        first_name: "Unknown",
+        temporary_hex: cleanedData,
+        not_exist: "yes",
+        Day: logToday(),
+        timein: dayjs().format("HH:mm"),
+      });
+
       return null;
     }
 
@@ -96,7 +114,6 @@ export const room1Switch = async (data) => {
       room: room,
     });
 
-    // Always create a new record in the temporary table
     const temporaryRecord = await Temporary.create({
       userId: userId,
       first_name: first_name,
@@ -108,6 +125,8 @@ export const room1Switch = async (data) => {
       subject: subject,
       teacher: teacherNumber,
       room: room,
+      banned: "no",
+      not_exist: "no",
     });
 
     console.log(`New temporary record created:`, temporaryRecord);

@@ -43,6 +43,12 @@ const temporary = temporaryModel.init(
     room: {
       type: DataTypes.STRING,
     },
+    banned: {
+      type: DataTypes.STRING,
+    },
+    not_exist: {
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize: db,

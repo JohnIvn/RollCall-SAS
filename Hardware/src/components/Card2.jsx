@@ -25,7 +25,7 @@ export default function Card1({ CardStatus, OnClose, Label }) {
       if (data.type === "scan_data" && data.data.length > 0) {
         setScanData([...data.data].reverse());
 
-        const currentScan = data.data[data.data.length - 1]; 
+        const currentScan = data.data[data.data.length - 1];
         if (currentScan.temporary_id !== latestScanIdRef.current) {
           setLatestScan(currentScan);
           setShowSuccess(true);
