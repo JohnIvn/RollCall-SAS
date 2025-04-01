@@ -6,6 +6,7 @@ import { studentAccount } from "../Models/studentAccountModel.js";
 import Room1 from "../Models/room1Model.js";
 import { logToday } from "../Services/dayToday.js";
 import { teacherAccount } from "../Models/teacherAccountModel.js";
+import Temporary from "../Models/temporaryModel.js"; // Import Temporary model
 
 let lastScannedCard = null;
 
@@ -40,7 +41,7 @@ export const room1Switch = async (data) => {
       return null;
     }
 
-    const { userId, first_name, last_name } = student;
+    const { userId, first_name, middle_name, last_name } = student;
 
     console.log(
       `Student Identified: ${first_name} ${last_name}, User ID: ${userId}`
@@ -82,7 +83,7 @@ export const room1Switch = async (data) => {
       Day: currentDay,
       timein: currentTime,
       subject: subject,
-      teacher: teacherNumber, 
+      teacher: teacherNumber,
       room: room,
     });
 
@@ -95,9 +96,46 @@ export const room1Switch = async (data) => {
       room: room,
     });
 
+    // Check if the temporary table already has a row
+    let temporaryRecord = await Temporary.findOne({ where: {} });
+
+    if (temporaryRecord) {
+      // Update the existing row if it exists
+      temporaryRecord = await temporaryRecord.update({
+        userId: userId,
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        temporary_hex: cleanedData,
+        Day: currentDay,
+        timein: currentTime,
+        subject: subject,
+        teacher: teacherNumber,
+        room: room,
+      });
+
+      console.log(`Temporary record updated:`, temporaryRecord);
+    } else {
+      // If no record exists, create a new row
+      temporaryRecord = await Temporary.create({
+        userId: userId,
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        temporary_hex: cleanedData,
+        Day: currentDay,
+        timein: currentTime,
+        subject: subject,
+        teacher: teacherNumber,
+        room: room,
+      });
+
+      console.log(`Temporary record inserted:`, temporaryRecord);
+    }
+
     return newAttendance;
   } catch (error) {
     console.error("Error in room1Switch:", error);
-    throw error; 
+    throw error;
   }
 };

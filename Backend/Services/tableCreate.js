@@ -17,6 +17,7 @@ import Room3 from "../Models/room3Model.js";
 import Room4 from "../Models/room4Model.js";
 import Day from "../Models/dayModel.js";
 import studentSubjects from "../Models/studentAccountSubjects.js";
+import temporary from "../Models/temporaryModel.js";
 
 async function createTableUserAccounts() {
   try {
@@ -163,6 +164,15 @@ async function createTableStudentsSubjectsTable() {
   }
 }
 
+async function createTableTemporarySubjectsTable() {
+  try {
+    await temporary.sync({ alter: false });
+    console.log("Temporary table is checked and updated if necessary");
+  } catch (error) {
+    console.error("Error checking/updating Temporary table", error);
+  }
+}
+
 export {
   createTableUserAccounts,
   createTableStudentUnhashedccounts,
@@ -179,4 +189,5 @@ export {
   createTableRoom4Table,
   createTableDayTable,
   createTableStudentsSubjectsTable,
+  createTableTemporarySubjectsTable,
 };

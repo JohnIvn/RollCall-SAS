@@ -20,6 +20,7 @@ import {
   createTableRoom4Table,
   createTableDayTable,
   createTableStudentsSubjectsTable,
+  createTableTemporarySubjectsTable,
 } from "./Services/tableCreate.js";
 import {
   insertSubjectIfNotExist,
@@ -67,6 +68,7 @@ async function initializeApp() {
     await createTableRoom4Table();
     await createTableAttendanceTable();
     await createTableBannedTable();
+    await createTableTemporarySubjectsTable();
 
     console.log("Tables have been created or checked.");
 
