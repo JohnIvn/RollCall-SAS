@@ -354,7 +354,7 @@ export const insertRoom1IfNotExist = async () => {
           teacher: "5",
           Day: "Tuesday",
           Time_In: "10:30",
-          Time_Out: "12:30",
+          Time_Out: "24:30",
         },
         {
           Room1_id: 3,
@@ -402,7 +402,7 @@ export const insertRoom1IfNotExist = async () => {
           teacher: "5",
           Day: "Monday",
           Time_In: "15:30",
-          Time_Out: "17:30",
+          Time_Out: "24:30",
         },
         {
           Room1_id: 9,
@@ -439,7 +439,7 @@ export const insertRoom2IfNotExist = async () => {
     if (existingSection.length === 0) {
       const room2_subs = [
         {
-          Room1_id: 1,
+          Room2_id: 1,
           Subjects: "CCS 102",
           teacher: "2",
           Day: "Monday",
@@ -447,7 +447,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "09:30",
         },
         {
-          Room1_id: 2,
+          Room2_id: 2,
           Subjects: "IT 104",
           teacher: "4",
           Day: "Tuesday",
@@ -455,7 +455,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "12:00",
         },
         {
-          Room1_id: 3,
+          Room2_id: 3,
           Subjects: "GEC 003",
           teacher: "1",
           Day: "Wednesday",
@@ -463,7 +463,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "15:30",
         },
         {
-          Room1_id: 4,
+          Room2_id: 4,
           Subjects: "PATHFIT 1",
           teacher: "5",
           Day: "Thursday",
@@ -471,7 +471,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "18:00",
         },
         {
-          Room1_id: 5,
+          Room2_id: 5,
           Subjects: "CCS 117",
           teacher: "3",
           Day: "Friday",
@@ -479,7 +479,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "10:30",
         },
         {
-          Room1_id: 6,
+          Room2_id: 6,
           Subjects: "IT 106",
           teacher: "2",
           Day: "Saturday",
@@ -487,7 +487,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "13:00",
         },
         {
-          Room1_id: 7,
+          Room2_id: 7,
           Subjects: "CCS 108",
           teacher: "4",
           Day: "Sunday",
@@ -495,15 +495,15 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "16:30",
         },
         {
-          Room1_id: 8,
+          Room2_id: 8,
           Subjects: "PR 002",
           teacher: "1",
           Day: "Monday",
           Time_In: "09:00",
-          Time_Out: "11:00",
+          Time_Out: "12:00",
         },
         {
-          Room1_id: 9,
+          Room2_id: 9,
           Subjects: "NSTP 2",
           teacher: "5",
           Day: "Tuesday",
@@ -511,7 +511,7 @@ export const insertRoom2IfNotExist = async () => {
           Time_Out: "14:30",
         },
         {
-          Room1_id: 10,
+          Room2_id: 10,
           Subjects: "CCS 124",
           teacher: "3",
           Day: "Wednesday",

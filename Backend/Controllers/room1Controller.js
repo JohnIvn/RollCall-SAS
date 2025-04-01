@@ -6,7 +6,7 @@ import { studentAccount } from "../Models/studentAccountModel.js";
 import Room1 from "../Models/room1Model.js";
 import { logToday } from "../Services/dayToday.js";
 import { teacherAccount } from "../Models/teacherAccountModel.js";
-import Temporary from "../Models/temporaryModel.js"; // Import Temporary model
+import Temporary from "../Models/temporaryModel.js";
 
 let lastScannedCard = null;
 
@@ -96,42 +96,21 @@ export const room1Switch = async (data) => {
       room: room,
     });
 
-    // Check if the temporary table already has a row
-    let temporaryRecord = await Temporary.findOne({ where: {} });
+    // Always create a new record in the temporary table
+    const temporaryRecord = await Temporary.create({
+      userId: userId,
+      first_name: first_name,
+      middle_name: middle_name,
+      last_name: last_name,
+      temporary_hex: cleanedData,
+      Day: currentDay,
+      timein: currentTime,
+      subject: subject,
+      teacher: teacherNumber,
+      room: room,
+    });
 
-    if (temporaryRecord) {
-      // Update the existing row if it exists
-      temporaryRecord = await temporaryRecord.update({
-        userId: userId,
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        temporary_hex: cleanedData,
-        Day: currentDay,
-        timein: currentTime,
-        subject: subject,
-        teacher: teacherNumber,
-        room: room,
-      });
-
-      console.log(`Temporary record updated:`, temporaryRecord);
-    } else {
-      // If no record exists, create a new row
-      temporaryRecord = await Temporary.create({
-        userId: userId,
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        temporary_hex: cleanedData,
-        Day: currentDay,
-        timein: currentTime,
-        subject: subject,
-        teacher: teacherNumber,
-        room: room,
-      });
-
-      console.log(`Temporary record inserted:`, temporaryRecord);
-    }
+    console.log(`New temporary record created:`, temporaryRecord);
 
     return newAttendance;
   } catch (error) {
