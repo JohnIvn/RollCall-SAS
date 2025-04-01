@@ -1,7 +1,12 @@
 import { handleLogin } from "../Controllers/loginController.js";
 import { handlefetch, handlefetchStudent } from "../Controllers/handleFetch.js";
 import handleTeacherFetch from "../Controllers/handleTeacherFetch.js";
-import  handlefetchSchedule  from "../Controllers/handleScheduleFetch.js";
+import {
+  handlefetchSchedule,
+  handlefetchSchedule2,
+  handlefetchSchedule3,
+  handlefetchSchedule4,
+} from "../Controllers/handleScheduleFetch.js";
 import handleAttendanceFetch from "../Controllers/handleAttendanceFetch.js";
 
 export function handleWebSocketMessage(ws, message) {
@@ -29,6 +34,18 @@ export function handleWebSocketMessage(ws, message) {
 
       case "fetch_schedule":
         handlefetchSchedule(ws, data);
+        break;
+
+      case "fetch_schedule_2":
+        handlefetchSchedule2(ws, data);
+        break;
+
+      case "fetch_schedule_3":
+        handlefetchSchedule3(ws, data);
+        break;
+
+      case "fetch_schedule_4":
+        handlefetchSchedule4(ws, data);
         break;
 
       case "fetch_attendance":
