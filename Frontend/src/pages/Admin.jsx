@@ -126,11 +126,11 @@ export default function AdminPage() {
   return (
     <section className="flex flex-col justify-start items-center w-full h-screen overflow-x-hidden overflow-y-auto">
       <div
-        className="flex lg:flex-row flex-col justify-between items-center w-4/5 gap-10 p-2 pt-12"
+        className="lg:flex lg:flex-row flex-col justify-between items-center w-full lg:w-4/5 gap-10 p-2 pt-12"
         style={{ minHeight: "100%", height: "auto" }}
       >
         {/* Professor Card */}
-        <div className="flex flex-col w-2/5 h-full bg-white rounded-2xl p-4">
+        <div className="flex flex-col w-full lg:w-2/5 h-2/3 lg:h-full bg-white rounded-2xl p-4">
           <div className="flex flex-col justify-center items-center w-auto h-1/2">
             <div className="flex rounded-full h-40 w-40 border-2 border-emerald-800 overflow-hidden">
               <img
@@ -139,18 +139,18 @@ export default function AdminPage() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="flex flex-col items-center px-2 justify-center p-8 w-2/3">
-              <h1 className="w-full text-start text-2xl font-semibold">
+            <div className="flex flex-col items-center px-2 justify-center p-2 lg:p-8 w-3/4">
+              <h1 className="w-full text-start text-lg lg:text-2xl font-semibold">
                 {professor[0]?.name || "Jan Ivan Montenegro"}
               </h1>
-              <p className="text-xl w-full text-start">
+              <p className="text-md lg:text-xl w-full text-start">
                 {professor[0]?.course || "Currently Undefined"}
               </p>
             </div>
           </div>
 
           {/* Schedule Section */}
-          <h1 className="flex w-8/9 justify-start ml-4 items-center font-semibold ">
+          <h1 className="flex w-8/9 justify-start lg:ml-4 items-center font-semibold ">
             Schedule:
           </h1>
           {schedule.length === 0 ? (
@@ -178,10 +178,10 @@ export default function AdminPage() {
         </div>
 
         {/* Students List */}
-        <div className="flex flex-col justify-start items-center w-3/5 h-full gap-8 rounded-2xl overflow-hidden">
+        <div className="flex flex-col justify-start items-center w-full lg:w-3/5 h-full gap-8 mt-10 lg:m-0 rounded-2xl overflow-hidden">
           <div className="flex items-center justify-center w-full h-1/5 p-4 bg-blue-950 rounded-2xl">
-            <div className="flex flex-col justify-center items-start w-3/5 h-full">
-              <h1 className="flex w-full h-auto text-white text-xl">
+            <div className="flex flex-col justify-center items-start w-1/2 lg:w-3/5 h-full">
+              <h1 className="flex w-full h-auto text-white text-lg lg:text-xl">
                 Attendance
               </h1>
               <p className="flex w-full h-auto text-white text-sm">
@@ -190,7 +190,7 @@ export default function AdminPage() {
                   : "No schedule selected"}
               </p>
             </div>
-            <div className="flex justify-center items-center w-2/5 h-full relative">
+            <div className="flex justify-center items-center w-1/2 lg:w-2/5 h-full relative">
               <input
                 className="flex h-10 w-full rounded-xl border border-gray-600 text-white placeholder-gray-400 pl-8"
                 placeholder="Search..."
@@ -207,10 +207,10 @@ export default function AdminPage() {
 
           <div className="flex flex-col justify-start items-center w-full h-full overflow-hidden rounded-2xl">
             {/* Table Header */}
-            <div className="flex justify-center items-center h-16 w-full bg-zinc-800">
-              <h1 className="w-1/6 text-center text-white">Student No</h1>
-              <h1 className="w-1/2 text-center text-white">Student Name</h1>
-              <h1 className="w-1/6 text-center text-white">Attendance</h1>
+            <div className="flex justify-center items-center px-2 lg:p-0 h-16 w-full bg-zinc-800">
+              <h1 className="w-1/4 lg:w-1/6 text-center text-white text-md lg:text-lg">Student No</h1>
+              <h1 className="w-1/2 lg:w-1/2 text-center text-white text-md lg:text-lg">Student Name</h1>
+              <h1 className="w-1/4 lg:w-1/6 text-center text-white text-md lg:text-lg">Attendance</h1>
             </div>
 
             {/* Table Body */}
@@ -231,15 +231,15 @@ export default function AdminPage() {
                 filteredStudents.map((student, index) => (
                   <div
                     key={index}
-                    className="flex justify-center items-center h-10 w-full even:bg-gray-100"
+                    className="flex justify-center items-center h-10 px-2 lg:p-0 w-full even:bg-gray-100"
                   >
-                    <h1 className="w-1/6 text-center text-black">
+                    <h1 className="w-1/4 lg:w-1/6 text-center text-sm lg:text-lg text-black">
                       {student.studentNumber}
                     </h1>
-                    <h1 className="w-1/2 text-center text-black truncate px-2">
+                    <h1 className="w-1/2 text-center text-black truncate text-sm lg:text-lg px-2">
                       {student.name}
                     </h1>
-                    <h1 className="w-1/6 text-center text-black text-sm">
+                    <h1 className="w-1/4 lg:w-1/6 text-center text-black text-sm">
                       {student.attendance === null ? (
                         "Click a subject"
                       ) : (

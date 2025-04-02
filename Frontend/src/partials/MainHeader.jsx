@@ -20,7 +20,7 @@
 				className="flex justify-center items-center w-full h-24 pt-6 fixed"
 			>
 				<nav
-					className="flex justify-between items-center w-4/5 h-full bg-zinc-900 shadow-black shadow-sm rounded-xl px-4"
+					className="flex justify-between items-center w-full lg:w-4/5 h-full bg-zinc-900 shadow-black shadow-sm rounded-xl px-4"
 				>
 					<Link
 						className="flex justify-center items-center text-center text-xl gap-2 outline-none"

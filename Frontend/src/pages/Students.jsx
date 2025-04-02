@@ -74,7 +74,7 @@ export default function StudentsPage() {
 
 	return (
 		<section
-			className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto"
+			className="flex flex-col justify-start items-center w-full lg:w-4/5 h-screen overflow-x-hidden overflow-y-auto"
 		>
 			<div
 				className="flex justify-between items-center w-full gap-10 p-2 pt-12"
@@ -120,10 +120,10 @@ export default function StudentsPage() {
 					<div
 						className='flex flex-col justify-start items-center w-full h-full overflow-hidden rounded-2xl'
 					>
-						<div className="flex justify-center items-center h-16 w-full bg-zinc-800">
-							<h1 className="w-1/6 text-center text-white">Student No</h1>
-							<h1 className="w-1/2 text-center text-white">Student Name</h1>
-							<h1 className="w-1/6 text-center text-white">Attendance</h1>
+						<div className="flex justify-center items-center px-2 lg:p-0 h-16 w-full bg-zinc-800">
+						  <h1 className="w-1/4 lg:w-1/6 text-center text-white text-md lg:text-lg">Student No</h1>
+						  <h1 className="w-1/2 text-center text-white text-md lg:text-lg">Student Name</h1>
+						  <h1 className="w-1/6 text-center text-white text-md lg:text-lg">Attendance</h1>
 						</div>
 
 						{/* Table Body */}
@@ -148,13 +148,13 @@ export default function StudentsPage() {
 										key={index}
 										onClick={() => navigateStudentProfile(student.userId)}
 									>
-										<h1 className="w-1/6 text-center">
+										<h1 className="w-1/4 lg:w-1/6 text-center text-sm lg:text-lg">
 											{student.studentNumber}
 										</h1>
-										<h1 className="w-1/2 text-center truncate px-2">
+										<h1 className="w-1/2 text-center text-sm lg:text-lg truncate px-2">
 											{student.name}
 										</h1>
-										<h1 className="w-1/6 text-center">
+										<h1 className="w-1/6 text-center text-sm lg:text-lg">
 										<FontAwesomeIcon
                           icon={student.attendance ? faCheckCircle : faCircle}
                           className={`${
