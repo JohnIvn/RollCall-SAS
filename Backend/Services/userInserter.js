@@ -167,7 +167,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 2,
           studentNumber: "20230880-N",
-          cardNumber: "8d76c53",
+          cardNumber: "7b9aa5",
           first_name: "Rafael",
           middle_name: "N",
           last_name: "Aquino",
@@ -182,7 +182,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 3,
           studentNumber: "20231165-N",
-          cardNumber: "9e87d64",
+          cardNumber: "3e7c95",
           first_name: "Khyl",
           middle_name: "A",
           last_name: "Arcilla",
@@ -197,7 +197,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 4,
           studentNumber: "20230881-N",
-          cardNumber: "0f98e75",
+          cardNumber: "f3d6b5",
           first_name: "Jeffrey",
           middle_name: "M",
           last_name: "Aspiras",
@@ -212,7 +212,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 5,
           studentNumber: "20231189-N",
-          cardNumber: "1a09f86",
+          cardNumber: "cb9695",
           first_name: "J-Vincent",
           middle_name: "C",
           last_name: "Azares",
@@ -227,7 +227,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 6,
           studentNumber: "20231558-N",
-          cardNumber: "2b1a097",
+          cardNumber: "4dcf135",
           first_name: "Kurt Russel",
           middle_name: "N",
           last_name: "Banatao",
@@ -242,7 +242,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 7,
           studentNumber: "20231473-N",
-          cardNumber: "3c2b1a8",
+          cardNumber: "9d085",
           first_name: "Allexis",
           middle_name: "L",
           last_name: "Benlota",
@@ -257,7 +257,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 8,
           studentNumber: "20231104-N",
-          cardNumber: "4d3c2b9",
+          cardNumber: "45dee5",
           first_name: "Matthew Gabriel",
           middle_name: "M",
           last_name: "Cania",
@@ -272,7 +272,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 9,
           studentNumber: "20230866-N",
-          cardNumber: "5e4d3c0",
+          cardNumber: "43ac125",
           first_name: "Marcus Benedict",
           middle_name: "P",
           last_name: "Catajay",
@@ -287,7 +287,7 @@ export const insertStudentIfNotExist = async () => {
         {
           userId: 10,
           studentNumber: "20231271-N",
-          cardNumber: "6f5e4d1",
+          cardNumber: "69b0125",
           first_name: "Ice Jhefferson",
           middle_name: "V",
           last_name: "Cruz",

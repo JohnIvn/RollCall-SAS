@@ -322,6 +322,10 @@ export const insertBannedIfNotExist = async () => {
           Banned_id: 1,
           Banned_hex: "3e8d402",
         },
+        {
+          Banned_id: 2,
+          Banned_hex: "62c2125",
+        },
       ];
 
       await Banned.bulkCreate(Course);
@@ -346,7 +350,7 @@ export const insertRoom1IfNotExist = async () => {
           teacher: "3",
           Day: "Monday",
           Time_In: "08:00",
-          Time_Out: "10:00",
+          Time_Out: "24:00",
         },
         {
           Room1_id: 2,
@@ -401,7 +405,7 @@ export const insertRoom1IfNotExist = async () => {
           Subjects: "IT 102",
           teacher: "5",
           Day: "Monday",
-          Time_In: "15:30",
+          Time_In: "10:30",
           Time_Out: "24:30",
         },
         {
@@ -418,7 +422,7 @@ export const insertRoom1IfNotExist = async () => {
           teacher: "4",
           Day: "Wednesday",
           Time_In: "10:30",
-          Time_Out: "12:30",
+          Time_Out: "24:30",
         },
       ];
 
