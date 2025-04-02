@@ -7,7 +7,7 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
 import Card2 from "../components/Card2";
 
 export default function CapturePage() {
@@ -21,6 +21,10 @@ export default function CapturePage() {
   const closeCard = () => {
     setShowCard(false);
   };
+
+  useEffect(() => {
+    openCard(1); 
+  }, []);
 
   return (
     <section className="flex flex-col justify-start items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto">
