@@ -9,6 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Card2 from "../components/Card2";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function CapturePage() {
   const [showCard, setShowCard] = useState(false);
@@ -16,6 +18,7 @@ export default function CapturePage() {
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const [error, setErrors] = useState(null);
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +32,8 @@ export default function CapturePage() {
     setShowPassword((showPassword) => !showPassword);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     setErrors(null)
     const ws = new WebSocket("ws://localhost:3002");
 
@@ -94,13 +98,20 @@ export default function CapturePage() {
           Welcome!
         </h1>
         <div
-          className='flex-col justify-between items-center h-1/2 py-32 lg:py-0 lg:h-full w-full lg:w-1/3 bg-white rounded-3xl'
+          className='flex-col justify-between items-center h-2/3 lg:py-0 lg:h-full w-full lg:w-1/3 bg-white rounded-3xl'
         >
+          <h1 className="flex justify-start items-center text-center px-6 w-full h-12 text-[#2D2D2D] text-2xl border-b-gray-400 border-b-1 lg:border-b-2 relative">
+            Admin
+            {error &&
+              <p
+                className="flex w-1/2 text-lg h-full p-4 justify-center items-center text-start text-red-600 absolute right-0"
+              >
+                {error}
+              </p>
+            }
+          </h1>
           <form
-            className="flex flex-col justify-center items-center w-full h-full"
-            action={(e) => {
-              e.preventDefault();
-            }}
+            className="flex flex-col justify-center items-center w-full h-full lg:h-auto p-0 lg:py-16"
           >
             <h1 className="flex w-3/4 m-2 text-xl">
               Scan your RFID as a Student, or Login as a Professor!

@@ -3,10 +3,10 @@ export default function PolicyPage() {
 
 	return (
 		<section
-			className="flex flex-col justify-center items-center w-4/5 h-screen overflow-x-hidden overflow-y-auto"
+			className="flex flex-col justify-center items-center w-full h-screen overflow-x-hidden overflow-y-auto"
 		>
 			<div
-				className="flex flex-col justify-center items-center w-full gap-6"
+				className="flex flex-col justify-center items-center w-4/5 gap-6 pt-20 lg:pt-0"
 				style={{ minHeight: "75%", height: 'auto' }}
 			>
 
