@@ -64,7 +64,6 @@ To run this project locally, make sure you have:
 
 6. Access the Dashboard (Locally):
    Open your browser and go to:
-   http://localhost:3000
 
 ## FEATURES
 
