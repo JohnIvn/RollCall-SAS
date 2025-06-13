@@ -1,6 +1,6 @@
 # RollCall Student Assistant System
 
-> Deprecated Version
+> RFID-Based Attendance Record Keeping System
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
