@@ -33,7 +33,7 @@ attendance tracking and ensures institutional accuracy.
 
 ---
 
-## REQUIREMENTS
+## Requirements
 
 To run this project locally, ensure you have the following installed:
 
