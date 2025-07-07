@@ -24,10 +24,10 @@ attendance tracking and ensures institutional accuracy.
 ## Table of Contents
 
 - [Requirements](#requirements)
+- [Features](#features)
 - [Release](#release)
 - [Installation](#installation)
 - [Structure](#structure)
-- [Installation](#installation)
 - [Technologies Used](#technologies-used)
 - [License](#license)
 
