@@ -24,7 +24,9 @@ attendance tracking and ensures institutional accuracy.
 ## Table of Contents
 
 - [Requirements](#requirements)
-- [Features](#features)
+- [Release](#release)
+- [Installation](#installation)
+- [Structure](#structure)
 - [Installation](#installation)
 - [Technologies Used](#technologies-used)
 - [License](#license)
@@ -51,6 +53,12 @@ To run this project locally, ensure you have the following installed:
 - Admin dashboard for student and log management
 - Automatic timestamping and history tracking
 - Secure login for administrators and teachers
+
+---
+
+## Release
+
+- Alternatively you can download the `.zip` file from the [Releases](https://github.com/JohnIvn/RollCall-SAS/releases) section.
 
 ---
 
@@ -131,6 +139,34 @@ yarn
    cd hardware
    yarn hardware
 ```
+---
+
+## Structure
+
+```bash
+/
+├── Backend/
+│   ├── Controllers/
+│   ├── Models/
+│   ├── Routes/
+│   ├── Services/
+│   └── Websockets/
+└── Frontend/
+│   ├── public/
+|   └── src/
+|       ├── assets/
+|       ├── components/
+|       ├── pages/
+|       └── partials/                              
+└── Hardware/
+    └── ESP32 Websockets/
+    |   └── rfid_basic/
+    └── src/
+        ├── components/
+        ├── pages/
+        └── partials/               
+```
+
 ---
 
 ## Technologies-Used
